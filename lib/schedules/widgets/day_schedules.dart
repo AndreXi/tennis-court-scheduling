@@ -41,9 +41,50 @@ class DaySchedulesItem extends StatelessWidget {
     final r = <Widget>[];
     for (final courtName in courtSchedulingMap.keys) {
       final names = courtSchedulingMap[courtName] ?? [];
+      final maxDaily = SchedulesConst.maxDailySchedulesByCourt;
       r.add(
-        Column(
-          children: [Text(courtName), ...names.map((e) => Text(e))],
+        Container(
+          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(courtName),
+                  Row(
+                    children: [
+                      Text(
+                        '${maxDaily - names.length} / ',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: maxDaily - names.length == 0
+                              ? Colors.red
+                              : Colors.green,
+                        ),
+                      ),
+                      Text(
+                        '$maxDaily',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: maxDaily - names.length == 0
+                              ? Colors.red
+                              : Colors.green,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: names.map((e) => Text(e)).toList(),
+              )
+            ],
+          ),
         ),
       );
     }
