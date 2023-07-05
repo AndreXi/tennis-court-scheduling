@@ -12,6 +12,7 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFFC6ED2C)),
+        iconTheme: const IconThemeData(color: Color(0xFF006D42)),
         primaryColor: const Color(0xFF006D42),
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF339966),
