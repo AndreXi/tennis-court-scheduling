@@ -7,6 +7,8 @@ abstract class SchedulesState extends Equatable {
   List<Object> get props => [];
 }
 
+class SchedulesInitial extends SchedulesState {}
+
 class SchedulesFetching extends SchedulesState {}
 
 class SchedulesEmpty extends SchedulesState {}

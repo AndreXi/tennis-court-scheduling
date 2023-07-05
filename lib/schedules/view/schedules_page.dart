@@ -33,6 +33,26 @@ class SchedulesView extends StatelessWidget {
       appBar: AppBar(
         title: Text(l10n.schedules_title),
       ),
+      body: BlocBuilder<SchedulesCubit, SchedulesState>(
+        builder: (context, state) {
+          switch (state) {
+            case SchedulesInitial():
+              context.read<SchedulesCubit>().fetchData();
+
+            case SchedulesFetching():
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+
+            case SchedulesSuccess():
+              return SizedBox(
+                child: DaySchedulesList(items: state.items),
+              );
+          }
+
+          return const SizedBox();
+        },
+      ),
     );
   }
 }

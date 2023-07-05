@@ -11,10 +11,10 @@ void main() {
 
     if (box.isEmpty) {
       await box.putAll({
-        '2023-9-23': {
+        '2023-09-23': {
           SchedulesConst.courtNames[1]: ['Andres Pereira'],
         },
-        '2023-7-5': {
+        '2023-07-05': {
           SchedulesConst.courtNames[2]: [
             'Maria Garcia',
             'Pedro Martinez',
@@ -25,7 +25,7 @@ void main() {
             'Tony Gutierrez',
           ]
         },
-        '2023-7-6': {
+        '2023-07-06': {
           SchedulesConst.courtNames[2]: ['Sonia Perez']
         },
       });
