@@ -1,6 +1,4 @@
-import 'package:tennis_court_scheduling/schedules/schedules.dart';
-
-typedef SchedulesBoxType = List<SchedulesModel>;
+typedef SchedulesBoxType = Map<String, List<String>>;
 
 abstract final class SchedulesConst {
   static String boxName = 'schedules';

@@ -5,7 +5,7 @@ class SchedulesRepository {
 
   final SchedulesDataProvider dataProvider;
 
-  Future<Map<String, List<SchedulesModel>>> getAll() async {
+  Future<Map<String, SchedulesBoxType>> getAll() async {
     return dataProvider.readData();
   }
 }

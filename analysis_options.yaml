@@ -4,6 +4,8 @@ analyzer:
   exclude:
     - build/**
     - '**/__generated__/**'
+    - '**.g.*'
+    - '**.gr.*'
 
 linter:
   rules:

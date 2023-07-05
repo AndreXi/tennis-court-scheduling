@@ -31,7 +31,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Init Hive and register adapters
   await Hive.initFlutter();
-  Hive.registerAdapter(SchedulesModelAdapter());
   await Hive.deleteBoxFromDisk(SchedulesConst.boxName);
 
   runApp(await builder());
