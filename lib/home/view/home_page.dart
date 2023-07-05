@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
               color: Colors.transparent,
               border: Border.all(color: Colors.red),
             ),
-            child: ElevatedButton(child: Text("hi"), onPressed: () {}),
+            child: ElevatedButton(child: const Text('hi'), onPressed: () {}),
           ),
         ),
       ),

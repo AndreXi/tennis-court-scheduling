@@ -5,8 +5,7 @@ import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 void main() {
   bootstrap(() async {
-    final box =
-        await Hive.openBox<List<SchedulesModel>>(SchedulesConst.boxName);
+    final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
 
     if (box.isEmpty) {
       await box.putAll({

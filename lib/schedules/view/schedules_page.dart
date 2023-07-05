@@ -1,12 +1,29 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 @RoutePage()
 class SchedulesPage extends StatelessWidget {
-  const SchedulesPage({super.key});
+  SchedulesPage({super.key});
+
+  final schedulesRepository =
+      SchedulesRepository(dataProvider: SchedulesDataProvider());
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => SchedulesCubit(repository: schedulesRepository),
+      child: const SchedulesView(),
+    );
+  }
+}
+
+class SchedulesView extends StatelessWidget {
+  const SchedulesView({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +32,6 @@ class SchedulesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.schedules_title),
-      ),
-      body: FutureBuilder(
-        future: Hive.openBox<List<SchedulesModel>>(SchedulesConst.boxName),
-        builder: (context, snapshot) {
-          final data = snapshot.data?.get('2023-7-5');
-
-          print(snapshot.data?.toString());
-          print(data);
-          return Center(
-            child: Column(
-              children: [
-                Text(snapshot.data?.keys.toString() ?? 'ne'),
-                Text(snapshot.data.toString() ?? 'ne'),
-              ],
-            ),
-          );
-        },
       ),
     );
   }
