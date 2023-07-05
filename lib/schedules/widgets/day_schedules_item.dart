@@ -19,15 +19,17 @@ class DaySchedulesItem extends StatelessWidget {
       final maxDaily = SchedulesConst.maxDailySchedulesByCourt;
       r.add(
         Container(
-          decoration: const BoxDecoration(border: Border(top: BorderSide())),
-          // padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+          constraints: const BoxConstraints(maxHeight: 40 * 3),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SchedulesCourtInfo(
-                courtName: courtName,
-                maxDaily: maxDaily,
-                names: names,
+              Expanded(
+                child: SchedulesCourtInfo(
+                  courtName: courtName,
+                  maxDaily: maxDaily,
+                  names: names,
+                ),
               ),
               SchedulesCourtReserverNames(names: names)
             ],
@@ -79,83 +81,6 @@ class DaySchedulesItem extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class SchedulesCourtReserverNames extends StatelessWidget {
-  const SchedulesCourtReserverNames({
-    required this.names,
-    super.key,
-  });
-
-  final List<String> names;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      // height: 80,
-      width: 200,
-      decoration: BoxDecoration(border: Border(left: BorderSide())),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: names
-            .map((e) => Container(
-                  height: 35,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.person),
-                      Text(e),
-                    ],
-                  ),
-                ))
-            .toList(),
-      ),
-    );
-  }
-}
-
-class SchedulesCourtInfo extends StatelessWidget {
-  const SchedulesCourtInfo({
-    required this.courtName,
-    required this.maxDaily,
-    required this.names,
-    super.key,
-  });
-
-  final String courtName;
-  final int maxDaily;
-  final List<String> names;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(courtName),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            Text(
-              '${maxDaily - names.length}/',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: maxDaily - names.length == 0 ? Colors.red : Colors.green,
-              ),
-            ),
-            Text(
-              '$maxDaily',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: maxDaily - names.length == 0 ? Colors.red : Colors.green,
-              ),
-            ),
-          ],
-        )
-      ],
     );
   }
 }
