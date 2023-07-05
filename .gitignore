@@ -128,8 +128,9 @@ app.*.map.json
 # Ferry GraphQL generated folders
 __generated__/
 
-# Gererated by Router
+# Generated files
 *.gr.*
+*.g.*
 
 # Ignore Folder
 _folder/
