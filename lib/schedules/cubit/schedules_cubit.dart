@@ -5,7 +5,7 @@ import 'package:tennis_court_scheduling/schedules/schedules.dart';
 part 'schedules_state.dart';
 
 class SchedulesCubit extends Cubit<SchedulesState> {
-  SchedulesCubit({required this.repository}) : super(SchedulesInitial());
+  SchedulesCubit({required this.repository}) : super(SchedulesFetch());
 
   final SchedulesRepository repository;
 
@@ -19,7 +19,16 @@ class SchedulesCubit extends Cubit<SchedulesState> {
     }
   }
 
-  Future<void> openConfirmDeleteDialog(ReservationInfo info) async {
-    emit(SchedulesConfirmDelete(info: info));
+  Future<void> deleteReservation(ReservationInfo info) async {
+    final result = await repository.removeReservation(info);
+    if (result) {
+      emit(SchedulesFetch());
+    } else {
+      emit(
+        const SchedulesError(
+          'Error deleting the reservation, reload the data and try again',
+        ),
+      );
+    }
   }
 }

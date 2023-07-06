@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class SchedulesCourtReserverNames extends StatelessWidget {
@@ -13,14 +14,17 @@ class SchedulesCourtReserverNames extends StatelessWidget {
   final String date;
   final List<String> names;
 
-  void onPressedDelete(BuildContext context, ReservationInfo info) async {
-    final wasConfirmed = await showDialog<bool>(
+  void onPressedDelete(BuildContext context, ReservationInfo info) {
+    showDialog<bool>(
       context: context,
       builder: (context) {
         return NameConfirmDeleteDialog(info: info);
       },
-    );
-    // context.read<SchedulesCubit>().(info);
+    ).then((wasConfirmed) {
+      if (wasConfirmed ?? true) {
+        context.read<SchedulesCubit>().deleteReservation(info);
+      }
+    });
   }
 
   @override

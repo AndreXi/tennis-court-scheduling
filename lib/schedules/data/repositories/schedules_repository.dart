@@ -13,8 +13,8 @@ class SchedulesRepository {
     final data = await dataProvider.readData(info.date) ?? {};
     if (data.isEmpty || !data.containsKey(info.courtName)) return false;
 
-    final names = data[info.courtName] ?? [];
-    final wasRemoved = names.remove(info.userName);
+    final names = data[info.courtName] ?? []
+      ..remove(info.userName);
 
     /// If the list is empty remove the courtData completely
     if (names.isEmpty) {
@@ -25,11 +25,6 @@ class SchedulesRepository {
     if (data.isEmpty) {
       await dataProvider.deleteData(info.date);
       return true;
-    }
-
-    /// If the name was removed, update the list in [data]
-    if (wasRemoved) {
-      data[info.courtName] = names;
     }
 
     /// Write the updated data

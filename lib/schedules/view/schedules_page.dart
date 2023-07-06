@@ -36,7 +36,7 @@ class SchedulesView extends StatelessWidget {
       body: BlocBuilder<SchedulesCubit, SchedulesState>(
         builder: (context, state) {
           switch (state) {
-            case SchedulesInitial():
+            case SchedulesFetch():
               context.read<SchedulesCubit>().fetchData();
 
             case SchedulesFetching():
