@@ -6,15 +6,14 @@ import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 @RoutePage()
 class SchedulesPage extends StatelessWidget {
-  SchedulesPage({super.key});
-
-  final schedulesRepository =
-      SchedulesRepository(dataProvider: SchedulesDataProvider());
+  const SchedulesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SchedulesCubit(repository: schedulesRepository),
+      create: (context) => SchedulesCubit(
+        repository: SchedulesRepository(dataProvider: SchedulesDataProvider()),
+      ),
       child: const SchedulesView(),
     );
   }
@@ -25,6 +24,19 @@ class SchedulesView extends StatelessWidget {
     super.key,
   });
 
+  void openCreateScheduleDialog(BuildContext context) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return const CreateScheduleDialog();
+      },
+    ).then((value) {
+      if (value ?? false) {
+        context.read<SchedulesCubit>().fetchData();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -32,9 +44,21 @@ class SchedulesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.schedules_title),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: ElevatedButton.icon(
+              onPressed: () => openCreateScheduleDialog(context),
+              icon: const Icon(Icons.add),
+              label: Text(l10n.schedulesPage_createButtonLabel),
+            ),
+          )
+        ],
       ),
       body: BlocBuilder<SchedulesCubit, SchedulesState>(
         builder: (context, state) {
+          final data = context.read<SchedulesCubit>().schedules;
+
           switch (state) {
             case SchedulesFetch():
               context.read<SchedulesCubit>().fetchData();
@@ -44,13 +68,13 @@ class SchedulesView extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
 
-            case SchedulesSuccess():
-              return SizedBox(
-                child: DaySchedulesList(items: state.items),
+            case SchedulesEmpty():
+              return const Center(
+                child: Text('Empty :('),
               );
           }
 
-          return const SizedBox();
+          return DaySchedulesList(items: data);
         },
       ),
     );

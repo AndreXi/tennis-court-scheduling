@@ -1,5 +1,13 @@
 {
   "@@locale": "en",
+  "courtField_available": "Available",
+  "courtField_full": "Full",
+  "createSchedule_cancel": "Cancel",
+  "createSchedule_confirm": "Confirm",
+  "createSchedule_title": "Create Schedule",
+  "createScheduleForm_nameInput_empty": "The name is required.",
+  "createScheduleForm_nameInput_label": "Name",
+  "datePicker_label": "Date",
   "nameConfirmDeleteDialog_cancel": "Cancel",
   "nameConfirmDeleteDialog_confirm": "Confirm",
   "nameConfirmDeleteDialog_content": "Are you sure to remove the reservation for {userName}?",
@@ -11,5 +19,7 @@
     }
   },
   "nameConfirmDeleteDialog_title": "Delete Reservation",
-  "schedules_title": "Schedules"
+  "schedules_title": "Schedules",
+  "schedulesCourtInfo_freeLabel": "Free: ",
+  "schedulesPage_createButtonLabel": "Create schedule"
 }

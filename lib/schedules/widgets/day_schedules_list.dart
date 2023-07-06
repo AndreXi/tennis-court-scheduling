@@ -18,9 +18,12 @@ class DaySchedulesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: _buildItems(),
+    return Align(
+      alignment: Alignment.topCenter,
+      child: SingleChildScrollView(
+        child: Column(
+          children: _buildItems(),
+        ),
       ),
     );
   }

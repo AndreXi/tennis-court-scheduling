@@ -14,7 +14,7 @@ void main() {
         '2023-09-23': {
           SchedulesConst.courtNames[1]: ['Andres Pereira'],
         },
-        '2023-07-05': {
+        '2023-07-06': {
           SchedulesConst.courtNames[2]: [
             'Maria Garcia',
             'Pedro Martinez',
@@ -25,7 +25,7 @@ void main() {
             'Tony Gutierrez',
           ]
         },
-        '2023-07-06': {
+        '2023-07-07': {
           SchedulesConst.courtNames[2]: ['Sonia Perez']
         },
       });

@@ -47,8 +47,13 @@ class SchedulesCourtReserverNames extends StatelessWidget {
                         padding: EdgeInsets.all(4),
                         child: Icon(Icons.person),
                       ),
-                      Text(name),
-                      const Spacer(),
+                      Expanded(
+                        child: Text(
+                          name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: IconButton(
@@ -60,7 +65,10 @@ class SchedulesCourtReserverNames extends StatelessWidget {
                               date: date,
                             ),
                           ),
-                          icon: const Icon(Icons.remove_circle),
+                          icon: const Icon(
+                            Icons.remove_circle,
+                            color: Color(0xFF993300),
+                          ),
                         ),
                       )
                     ],
