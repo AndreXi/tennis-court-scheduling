@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class SchedulesRepository {
@@ -30,5 +31,25 @@ class SchedulesRepository {
     /// Write the updated data
     await dataProvider.writeData(info.date, data);
     return true;
+  }
+
+  Future<List<bool>> checkAvailability(
+    List<String> courtNames,
+    DateTime date,
+    int stock,
+  ) async {
+    final r = <bool>[];
+    final formattedDate = DateFormat('yyyy-MM-dd').format(date);
+    final dayData = await dataProvider.readData(formattedDate) ?? {};
+
+    for (final courtName in courtNames) {
+      if (dayData.keys.contains(courtName) &&
+          dayData[courtName]!.length < stock) {
+        r.add(true);
+      }
+      r.add(false);
+    }
+
+    return r;
   }
 }

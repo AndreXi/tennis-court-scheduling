@@ -6,15 +6,14 @@ import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 @RoutePage()
 class SchedulesPage extends StatelessWidget {
-  SchedulesPage({super.key});
-
-  final schedulesRepository =
-      SchedulesRepository(dataProvider: SchedulesDataProvider());
+  const SchedulesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SchedulesCubit(repository: schedulesRepository),
+      create: (context) => SchedulesCubit(
+        repository: SchedulesRepository(dataProvider: SchedulesDataProvider()),
+      ),
       child: const SchedulesView(),
     );
   }

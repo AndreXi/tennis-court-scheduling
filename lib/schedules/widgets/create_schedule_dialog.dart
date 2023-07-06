@@ -1,26 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tennis_court_scheduling/l10n/l10n.dart';
+import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class CreateScheduleDialog extends StatelessWidget {
   const CreateScheduleDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+
     return Dialog.fullscreen(
       backgroundColor: Colors.green.shade500,
-      child: Column(
-        children: [
-          Spacer(),
-          DialogButtons(),
-        ],
+      child: BlocProvider<CreateScheduleCubit>(
+        create: (context) => CreateScheduleCubit(
+          repository:
+              SchedulesRepository(dataProvider: SchedulesDataProvider()),
+        ),
+        child: Form(
+          key: formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            children: [
+              DatePicker(),
+              NameField(),
+              CourtField(),
+              Spacer(),
+              DialogButtons(
+                formKey: formKey,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 }
 
-class DialogButtons extends StatelessWidget {
-  const DialogButtons({super.key});
+class NameField extends StatelessWidget {
+  const NameField({
+    super.key,
+  });
 
-  void onAccept() {}
+  @override
+  Widget build(BuildContext context) {
+    final name = context.watch<CreateScheduleCubit>().state.data.userName;
+    final l10n = context.l10n;
+
+    return TextFormField(
+      decoration:
+          InputDecoration(labelText: l10n.createScheduleForm_nameInput_label),
+      controller: TextEditingController(text: name),
+      onEditingComplete: () =>
+          context.read<CreateScheduleCubit>().changeName(name),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return l10n.createScheduleForm_nameInput_empty;
+        }
+      },
+    );
+  }
+}
+
+class CourtField extends StatelessWidget {
+  const CourtField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    // final availability = context.read<SchedulesCubit>().
+
+    return Row(
+      children: SchedulesConst.courtNames.map((courtName) {
+        return Container(
+          child: Text(courtName),
+        );
+      }).toList(),
+      // decoration: InputDecoration(labelText: 'Court'),
+      // title: Text('Radio'),
+      // controller: TextEditingController(text: name),
+      // validator: (value) {
+      //   if (value == null || value.isEmpty) {
+      //     return l10n.createScheduleForm_nameInput_empty;
+      //   }
+      // },
+    );
+  }
+}
+
+class DialogButtons extends StatelessWidget {
+  const DialogButtons({required this.formKey, super.key});
+
+  final GlobalKey<FormState> formKey;
+
+  void onAccept() {
+    formKey.currentState?.validate();
+  }
 
   void onCancel(BuildContext context) {
     Navigator.of(context).pop(false);

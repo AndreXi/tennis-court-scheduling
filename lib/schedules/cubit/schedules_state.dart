@@ -1,10 +1,7 @@
 part of 'schedules_cubit.dart';
 
-abstract class SchedulesState extends Equatable {
+abstract class SchedulesState {
   const SchedulesState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class SchedulesFetch extends SchedulesState {}
@@ -19,9 +16,6 @@ final class SchedulesError extends SchedulesState {
   const SchedulesError(this.error);
 
   final String error;
-
-  @override
-  List<Object> get props => [error];
 }
 
 class SchedulesConfirmDelete extends SchedulesState {
@@ -30,7 +24,4 @@ class SchedulesConfirmDelete extends SchedulesState {
   });
 
   final ReservationInfo info;
-
-  @override
-  List<Object> get props => [info];
 }

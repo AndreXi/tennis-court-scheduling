@@ -1,5 +1,8 @@
 {
   "@@locale": "es",
+  "createScheduleForm_nameInput_empty": "The name is required.",
+  "createScheduleForm_nameInput_label": "Name",
+  "datePicker_label": "Date",
   "nameConfirmDeleteDialog_cancel": "Cancel",
   "nameConfirmDeleteDialog_confirm": "Confirm",
   "nameConfirmDeleteDialog_content": "Are you sure to remove the reservation for {userName}?",
