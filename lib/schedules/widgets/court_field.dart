@@ -8,16 +8,17 @@ class CourtField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CreateScheduleCubit, CreateScheduleState>(
-      builder: (context, state) {
-        return FormField<String>(
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return 'You must select a court to schedule';
-            }
-            return null;
-          },
-          builder: (field) {
+    return FormField<String>(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'You must select a court to schedule';
+        }
+        return null;
+      },
+      builder: (field) {
+        return BlocConsumer<CreateScheduleCubit, CreateScheduleState>(
+          listener: (context, state) => field.didChange(state.data.courtName),
+          builder: (context, state) {
             final l10n = context.l10n;
             final courtNames = SchedulesConst.courtNames;
             final data = state.data;
@@ -39,7 +40,6 @@ class CourtField extends StatelessWidget {
                             context
                                 .read<CreateScheduleCubit>()
                                 .changeCourt(courtName);
-                            field.didChange(courtName);
                           }
                         : null,
                     child: Column(
