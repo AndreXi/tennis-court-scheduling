@@ -45,9 +45,13 @@ class SchedulesView extends StatelessWidget {
       appBar: AppBar(
         title: Text(l10n.schedules_title),
         actions: [
-          IconButton(
-            onPressed: () => openCreateScheduleDialog(context),
-            icon: const Icon(Icons.add),
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: ElevatedButton.icon(
+              onPressed: () => openCreateScheduleDialog(context),
+              icon: const Icon(Icons.add),
+              label: Text(l10n.schedulesPage_createButtonLabel),
+            ),
           )
         ],
       ),

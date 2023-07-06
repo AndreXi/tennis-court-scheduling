@@ -20,5 +20,6 @@
   },
   "nameConfirmDeleteDialog_title": "Delete Reservation",
   "schedules_title": "Schedules",
-  "schedulesCourtInfo_freeLabel": "Free: "
+  "schedulesCourtInfo_freeLabel": "Free: ",
+  "schedulesPage_createButtonLabel": "Create schedule"
 }
