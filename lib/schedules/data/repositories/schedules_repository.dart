@@ -43,11 +43,11 @@ class SchedulesRepository {
     final dayData = await dataProvider.readData(formattedDate) ?? {};
 
     for (final courtName in courtNames) {
-      if (dayData.keys.contains(courtName) &&
-          dayData[courtName]!.length < stock) {
+      if (dayData.keys.contains(courtName)) {
+        r.add(dayData[courtName]!.length < stock);
+      } else {
         r.add(true);
       }
-      r.add(false);
     }
 
     return r;

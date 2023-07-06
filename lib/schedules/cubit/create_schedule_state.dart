@@ -2,6 +2,7 @@ part of 'create_schedule_cubit.dart';
 
 class SchedulesCreateScheduleData {
   const SchedulesCreateScheduleData({
+    required this.availability,
     required this.userName,
     required this.courtName,
     required this.date,
@@ -10,16 +11,19 @@ class SchedulesCreateScheduleData {
   final String userName;
   final String courtName;
   final DateTime date;
+  final List<bool> availability;
 
   SchedulesCreateScheduleData copyWith({
     String? userName,
     String? courtName,
     DateTime? date,
+    List<bool>? availability,
   }) {
     return SchedulesCreateScheduleData(
       userName: userName ?? this.userName,
       courtName: courtName ?? this.courtName,
       date: date ?? this.date,
+      availability: availability ?? this.availability,
     );
   }
 
@@ -28,7 +32,8 @@ class SchedulesCreateScheduleData {
 SchedulesCreateScheduleData(
   userName: $userName, 
   courtName: $courtName, 
-  date: $date
+  date: $date,
+  availability: $availability,
 )''';
 }
 

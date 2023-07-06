@@ -62,32 +62,6 @@ class NameField extends StatelessWidget {
   }
 }
 
-class CourtField extends StatelessWidget {
-  const CourtField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    // final availability = context.read<SchedulesCubit>().
-
-    return Row(
-      children: SchedulesConst.courtNames.map((courtName) {
-        return Container(
-          child: Text(courtName),
-        );
-      }).toList(),
-      // decoration: InputDecoration(labelText: 'Court'),
-      // title: Text('Radio'),
-      // controller: TextEditingController(text: name),
-      // validator: (value) {
-      //   if (value == null || value.isEmpty) {
-      //     return l10n.createScheduleForm_nameInput_empty;
-      //   }
-      // },
-    );
-  }
-}
-
 class DialogButtons extends StatelessWidget {
   const DialogButtons({required this.formKey, super.key});
 

@@ -11,19 +11,52 @@ class CreateScheduleCubit extends Cubit<CreateScheduleState> {
               userName: '',
               courtName: '',
               date: DateTime.now(),
+              availability:
+                  List.filled(SchedulesConst.maxDailySchedulesByCourt, false),
             ),
           ),
-        );
+        ) {
+    /// Default [data.date] selection
+    changeDate(state.data.date);
+  }
 
   final SchedulesRepository repository;
 
-  void changeDate(DateTime newDate) {
+  Future<void> changeDate(DateTime newDate) async {
     emit(CreateScheduleFetching(data: state.data.copyWith(date: newDate)));
-    // repository.getAll();
-    emit(CreateScheduleSuccess(data: state.data.copyWith()));
+
+    /// Update the [availability]
+    final newAvailability = await repository.checkAvailability(
+      SchedulesConst.courtNames,
+      newDate,
+      SchedulesConst.maxDailySchedulesByCourt,
+    );
+
+    /// Check if the selected [courtName] is available
+    var newCourtName = state.data.courtName;
+    final selectedCourtIndex =
+        SchedulesConst.courtNames.indexOf(state.data.courtName);
+    if (selectedCourtIndex > -1 && !newAvailability[selectedCourtIndex]) {
+      newCourtName = ''; // Reset the selection
+    }
+
+    emit(
+      CreateScheduleSuccess(
+        data: state.data.copyWith(
+          availability: newAvailability,
+          courtName: newCourtName,
+        ),
+      ),
+    );
   }
 
-  void changeName(String name) {
-    emit(CreateScheduleSuccess(data: state.data.copyWith(userName: name)));
+  void changeName(String newName) {
+    emit(CreateScheduleSuccess(data: state.data.copyWith(userName: newName)));
+  }
+
+  void changeCourt(String newCourtName) {
+    emit(
+      CreateScheduleSuccess(data: state.data.copyWith(courtName: newCourtName)),
+    );
   }
 }
