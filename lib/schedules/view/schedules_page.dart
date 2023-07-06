@@ -25,6 +25,15 @@ class SchedulesView extends StatelessWidget {
     super.key,
   });
 
+  void openCreateScheduleDialog(BuildContext context) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return const CreateScheduleDialog();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -32,6 +41,12 @@ class SchedulesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.schedules_title),
+        actions: [
+          IconButton(
+            onPressed: () => openCreateScheduleDialog(context),
+            icon: const Icon(Icons.add),
+          )
+        ],
       ),
       body: BlocBuilder<SchedulesCubit, SchedulesState>(
         builder: (context, state) {

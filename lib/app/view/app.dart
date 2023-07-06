@@ -10,6 +10,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFFC6ED2C)),
         iconTheme: const IconThemeData(color: Color(0xFF006D42)),
