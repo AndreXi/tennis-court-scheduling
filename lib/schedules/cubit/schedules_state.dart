@@ -7,7 +7,7 @@ abstract class SchedulesState extends Equatable {
   List<Object> get props => [];
 }
 
-class SchedulesInitial extends SchedulesState {}
+class SchedulesFetch extends SchedulesState {}
 
 class SchedulesFetching extends SchedulesState {}
 
@@ -29,4 +29,15 @@ final class SchedulesError extends SchedulesState {
 
   @override
   List<Object> get props => [error];
+}
+
+class SchedulesConfirmDelete extends SchedulesState {
+  const SchedulesConfirmDelete({
+    required this.info,
+  });
+
+  final ReservationInfo info;
+
+  @override
+  List<Object> get props => [info];
 }

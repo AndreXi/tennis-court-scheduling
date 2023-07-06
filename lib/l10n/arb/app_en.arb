@@ -1,4 +1,15 @@
 {
   "@@locale": "en",
+  "nameConfirmDeleteDialog_cancel": "Cancel",
+  "nameConfirmDeleteDialog_confirm": "Confirm",
+  "nameConfirmDeleteDialog_content": "Are you sure to remove the reservation for {userName}?",
+  "@nameConfirmDeleteDialog_content": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+  "nameConfirmDeleteDialog_title": "Delete Reservation",
   "schedules_title": "Schedules"
 }
