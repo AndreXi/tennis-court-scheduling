@@ -15,11 +15,23 @@ class App extends StatelessWidget {
         appBarTheme: const AppBarTheme(color: Color(0xFFC6ED2C)),
         iconTheme: const IconThemeData(color: Color(0xFF006D42)),
         primaryColor: const Color(0xFF006D42),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF339966),
+        inputDecorationTheme: const InputDecorationTheme(
+          labelStyle: TextStyle(
+            color: Color(0xccfefff3),
+          ),
+        ),
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(
+            color: Colors.white, // <-- TextFormField input color
+          ),
         ),
         fontFamily: 'Inter',
         useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF339966),
+        ).copyWith(
+          error: const Color(0xffc6ed2c),
+        ),
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

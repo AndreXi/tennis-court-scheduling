@@ -62,12 +62,28 @@ class CourtField extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Courts',
                 errorText: field.errorText,
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xfffefff3)),
+                ),
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xaafefff3)),
+                ),
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xaac6ed2c)),
+                ),
+                focusedErrorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xffc6ed2c)),
+                ),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: buildCourtButtons(),
+                child: Center(
+                  child: Wrap(
+                    spacing: 16,
+                    runSpacing: 16,
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: buildCourtButtons(),
+                  ),
                 ),
               ),
             );

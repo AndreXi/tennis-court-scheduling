@@ -9,9 +9,10 @@ class CreateScheduleDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
+    final l10n = context.l10n;
 
-    return Dialog.fullscreen(
-      backgroundColor: Colors.green.shade500,
+    return Dialog(
+      backgroundColor: const Color(0xFF339966),
       child: BlocProvider<CreateScheduleCubit>(
         create: (context) => CreateScheduleCubit(
           repository:
@@ -20,11 +21,30 @@ class CreateScheduleDialog extends StatelessWidget {
         child: Form(
           key: formKey,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              DatePicker(),
-              NameField(),
-              CourtField(),
-              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Wrap(
+                  runSpacing: 16,
+                  children: [
+                    Center(
+                      child: Text(
+                        l10n.createSchedule_title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 36,
+                          color: Color(0xFFfefff3),
+                        ),
+                      ),
+                    ),
+                    const DatePicker(),
+                    const NameField(),
+                    const CourtField(),
+                  ],
+                ),
+              ),
+              // Spacer(),
               DialogButtons(
                 formKey: formKey,
               ),
@@ -47,8 +67,21 @@ class NameField extends StatelessWidget {
     final l10n = context.l10n;
 
     return TextFormField(
-      decoration:
-          InputDecoration(labelText: l10n.createScheduleForm_nameInput_label),
+      decoration: InputDecoration(
+        labelText: l10n.createScheduleForm_nameInput_label,
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xfffefff3)),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xaafefff3)),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xaac6ed2c)),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xffc6ed2c)),
+        ),
+      ),
       controller: TextEditingController(text: name),
       onChanged: (v) => context.read<CreateScheduleCubit>().changeName(v),
       validator: (value) {

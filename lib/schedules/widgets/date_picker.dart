@@ -28,6 +28,18 @@ class DatePicker extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
         labelText: l10n.datePicker_label,
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xfffefff3)),
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xaafefff3)),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xaac6ed2c)),
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Color(0xffc6ed2c)),
+        ),
       ),
       controller: TextEditingController(
         text: DateFormat.yMd().format(selectedDate),
