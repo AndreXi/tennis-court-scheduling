@@ -12,7 +12,10 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF339966)),
+        appBarTheme: const AppBarTheme(
+          color: Color(0xFF339966),
+          titleTextStyle: TextStyle(color: Color(0xccfefff3), fontSize: 24),
+        ),
         iconTheme: const IconThemeData(color: Color(0xFF339966)),
         primaryColor: const Color(0xFF006D42),
         inputDecorationTheme: const InputDecorationTheme(
