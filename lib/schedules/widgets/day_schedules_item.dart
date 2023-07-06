@@ -31,10 +31,12 @@ class DaySchedulesItem extends StatelessWidget {
                   names: names,
                 ),
               ),
-              SchedulesCourtReserverNames(
-                names: names,
-                courtName: courtName,
-                date: date,
+              Expanded(
+                child: SchedulesCourtReserverNames(
+                  names: names,
+                  courtName: courtName,
+                  date: date,
+                ),
               )
             ],
           ),
@@ -48,7 +50,8 @@ class DaySchedulesItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dateTime = DateTime.parse(date);
 
-    return Padding(
+    return Container(
+      width: 500,
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: Card(
         clipBehavior: Clip.hardEdge,

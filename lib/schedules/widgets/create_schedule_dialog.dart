@@ -13,42 +13,47 @@ class CreateScheduleDialog extends StatelessWidget {
 
     return Dialog(
       backgroundColor: const Color(0xFF339966),
-      child: BlocProvider<CreateScheduleCubit>(
-        create: (context) => CreateScheduleCubit(
-          repository:
-              SchedulesRepository(dataProvider: SchedulesDataProvider()),
-        ),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Wrap(
-                  runSpacing: 16,
-                  children: [
-                    Center(
-                      child: Text(
-                        l10n.createSchedule_title,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 36,
-                          color: Color(0xFFfefff3),
+      child: SizedBox(
+        width: 400,
+        child: BlocProvider<CreateScheduleCubit>(
+          create: (context) => CreateScheduleCubit(
+            repository:
+                SchedulesRepository(dataProvider: SchedulesDataProvider()),
+          ),
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Wrap(
+                      runSpacing: 16,
+                      children: [
+                        Center(
+                          child: Text(
+                            l10n.createSchedule_title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 36,
+                              color: Color(0xFFfefff3),
+                            ),
+                          ),
                         ),
-                      ),
+                        const DatePicker(),
+                        const NameField(),
+                        const CourtField(),
+                      ],
                     ),
-                    const DatePicker(),
-                    const NameField(),
-                    const CourtField(),
-                  ],
-                ),
+                  ),
+                  // Spacer(),
+                  DialogButtons(
+                    formKey: formKey,
+                  ),
+                ],
               ),
-              // Spacer(),
-              DialogButtons(
-                formKey: formKey,
-              ),
-            ],
+            ),
           ),
         ),
       ),

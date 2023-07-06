@@ -47,8 +47,13 @@ class SchedulesCourtReserverNames extends StatelessWidget {
                         padding: EdgeInsets.all(4),
                         child: Icon(Icons.person),
                       ),
-                      Text(name),
-                      const Spacer(),
+                      Expanded(
+                        child: Text(
+                          name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: IconButton(
