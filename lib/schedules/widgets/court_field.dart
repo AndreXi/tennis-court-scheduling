@@ -8,42 +8,72 @@ class CourtField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final courtNames = SchedulesConst.courtNames;
-    final data = context.watch<CreateScheduleCubit>().state.data;
+    return BlocBuilder<CreateScheduleCubit, CreateScheduleState>(
+      builder: (context, state) {
+        return FormField<String>(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'You must select a court to schedule';
+            }
+            return null;
+          },
+          builder: (field) {
+            final l10n = context.l10n;
+            final courtNames = SchedulesConst.courtNames;
+            final data = state.data;
 
-    List<Widget> buildCourtButtons() {
-      final r = <Widget>[];
+            List<Widget> buildCourtButtons() {
+              final r = <Widget>[];
+              for (var i = 0; i < courtNames.length; i++) {
+                final courtName = courtNames[i];
+                final isAvailable = data.availability[i];
+                r.add(
+                  ElevatedButton(
+                    style: (data.courtName == courtName)
+                        ? ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFc6ed2c),
+                          )
+                        : null,
+                    onPressed: isAvailable
+                        ? () {
+                            context
+                                .read<CreateScheduleCubit>()
+                                .changeCourt(courtName);
+                            field.didChange(courtName);
+                          }
+                        : null,
+                    child: Column(
+                      children: [
+                        Text(courtName),
+                        Text(
+                          isAvailable
+                              ? l10n.courtField_available
+                              : l10n.courtField_full,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return r;
+            }
 
-      for (var i = 0; i < courtNames.length; i++) {
-        final courtName = courtNames[i];
-        final isAvailable = data.availability[i];
-
-        r.add(
-          ElevatedButton(
-            style: (data.courtName == courtName)
-                ? ElevatedButton.styleFrom(backgroundColor: Color(0xFFc6ed2c))
-                : null,
-            onPressed: isAvailable
-                ? () {
-                    context.read<CreateScheduleCubit>().changeCourt(courtName);
-                  }
-                : null,
-            child: Column(
-              children: [
-                Text(courtName),
-                Text(isAvailable ? 'Available' : 'Full'),
-              ],
-            ),
-          ),
+            return InputDecorator(
+              decoration: InputDecoration(
+                labelText: 'Courts',
+                errorText: field.errorText,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: buildCourtButtons(),
+                ),
+              ),
+            );
+          },
         );
-      }
-
-      return r;
-    }
-
-    return Row(
-      children: buildCourtButtons(),
+      },
     );
   }
 }

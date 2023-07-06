@@ -1,5 +1,9 @@
 {
   "@@locale": "es",
+  "courtField_available": "Available",
+  "courtField_full": "Full",
+  "createSchedule_cancel": "Cancel",
+  "createSchedule_confirm": "Confirm",
   "createScheduleForm_nameInput_empty": "The name is required.",
   "createScheduleForm_nameInput_label": "Name",
   "datePicker_label": "Date",

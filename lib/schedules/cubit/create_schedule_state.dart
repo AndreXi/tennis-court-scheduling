@@ -53,3 +53,16 @@ final class CreateScheduleFetching extends CreateScheduleState {
 final class CreateScheduleSuccess extends CreateScheduleState {
   CreateScheduleSuccess({required super.data});
 }
+
+final class CreateScheduleError extends CreateScheduleState {
+  CreateScheduleError(this.message, {required super.data});
+  final String message;
+}
+
+final class CreateScheduleCreationLoading extends CreateScheduleState {
+  CreateScheduleCreationLoading({required super.data});
+}
+
+final class CreateScheduleCreationSuccess extends CreateScheduleState {
+  CreateScheduleCreationSuccess({required super.data});
+}

@@ -30,7 +30,11 @@ class SchedulesView extends StatelessWidget {
       builder: (context) {
         return const CreateScheduleDialog();
       },
-    );
+    ).then((value) {
+      if (value ?? false) {
+        context.read<SchedulesCubit>().fetchData();
+      }
+    });
   }
 
   @override

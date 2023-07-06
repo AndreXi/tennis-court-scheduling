@@ -52,4 +52,15 @@ class SchedulesRepository {
 
     return r;
   }
+
+  Future<void> createSchedule(ReservationInfo info) async {
+    final data = await dataProvider.readData(info.date) ?? {};
+    final names = data[info.courtName] ?? [];
+    if (names.isEmpty) {
+      data[info.courtName] = [info.userName];
+    } else {
+      names.add(info.userName);
+    }
+    await dataProvider.writeData(info.date, data);
+  }
 }

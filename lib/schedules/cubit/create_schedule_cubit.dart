@@ -59,4 +59,19 @@ class CreateScheduleCubit extends Cubit<CreateScheduleState> {
       CreateScheduleSuccess(data: state.data.copyWith(courtName: newCourtName)),
     );
   }
+
+  Future<void> createSchedule(ReservationInfo info) async {
+    emit(CreateScheduleCreationLoading(data: state.data.copyWith()));
+    try {
+      await repository.createSchedule(info);
+      emit(CreateScheduleCreationSuccess(data: state.data.copyWith()));
+    } catch (_) {
+      emit(
+        CreateScheduleError(
+          'Creation failed, check the availability of the court',
+          data: state.data.copyWith(),
+        ),
+      );
+    }
+  }
 }
