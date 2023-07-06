@@ -16,7 +16,7 @@ class DatePicker extends StatelessWidget {
     );
     if (picked != null && picked != date) {
       if (!context.mounted) return;
-      context.read<CreateScheduleCubit>().changeDate(picked);
+      await context.read<CreateScheduleCubit>().changeDate(picked);
     }
   }
 

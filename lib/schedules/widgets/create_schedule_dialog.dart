@@ -88,6 +88,7 @@ class NameField extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return l10n.createScheduleForm_nameInput_empty;
         }
+        return null;
       },
     );
   }
