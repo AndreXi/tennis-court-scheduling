@@ -18,4 +18,8 @@ class SchedulesCubit extends Cubit<SchedulesState> {
       emit(SchedulesError(error.toString()));
     }
   }
+
+  Future<void> openConfirmDeleteDialog(ReservationInfo info) async {
+    emit(SchedulesConfirmDelete(info: info));
+  }
 }

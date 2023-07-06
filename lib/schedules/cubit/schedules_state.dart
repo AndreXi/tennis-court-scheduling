@@ -30,3 +30,14 @@ final class SchedulesError extends SchedulesState {
   @override
   List<Object> get props => [error];
 }
+
+class SchedulesConfirmDelete extends SchedulesState {
+  const SchedulesConfirmDelete({
+    required this.info,
+  });
+
+  final ReservationInfo info;
+
+  @override
+  List<Object> get props => [info];
+}

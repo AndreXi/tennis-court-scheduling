@@ -31,7 +31,11 @@ class DaySchedulesItem extends StatelessWidget {
                   names: names,
                 ),
               ),
-              SchedulesCourtReserverNames(names: names)
+              SchedulesCourtReserverNames(
+                names: names,
+                courtName: courtName,
+                date: date,
+              )
             ],
           ),
         ),

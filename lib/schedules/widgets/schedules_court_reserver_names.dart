@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class SchedulesCourtReserverNames extends StatelessWidget {
   const SchedulesCourtReserverNames({
     required this.names,
+    required this.courtName,
+    required this.date,
     super.key,
   });
 
+  final String courtName;
+  final String date;
   final List<String> names;
 
-  void onPressedDelete() {
-    // TODO(AndreXi): Implement it.
+  void onPressedDelete(BuildContext context, ReservationInfo info) async {
+    final wasConfirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return NameConfirmDeleteDialog(info: info);
+      },
+    );
+    // context.read<SchedulesCubit>().(info);
   }
 
   @override
@@ -34,9 +45,19 @@ class SchedulesCourtReserverNames extends StatelessWidget {
                       ),
                       Text(name),
                       const Spacer(),
-                      IconButton(
-                        onPressed: onPressedDelete,
-                        icon: const Icon(Icons.remove_circle),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4),
+                        child: IconButton(
+                          onPressed: () => onPressedDelete(
+                            context,
+                            ReservationInfo(
+                              userName: name,
+                              courtName: courtName,
+                              date: date,
+                            ),
+                          ),
+                          icon: const Icon(Icons.remove_circle),
+                        ),
                       )
                     ],
                   ),
