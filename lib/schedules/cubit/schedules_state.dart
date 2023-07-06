@@ -13,14 +13,7 @@ class SchedulesFetching extends SchedulesState {}
 
 class SchedulesEmpty extends SchedulesState {}
 
-final class SchedulesSuccess extends SchedulesState {
-  const SchedulesSuccess(this.items);
-
-  final Map<String, SchedulesBoxType> items;
-
-  @override
-  List<Object> get props => [items];
-}
+final class SchedulesSuccess extends SchedulesState {}
 
 final class SchedulesError extends SchedulesState {
   const SchedulesError(this.error);

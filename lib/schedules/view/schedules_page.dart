@@ -50,6 +50,8 @@ class SchedulesView extends StatelessWidget {
       ),
       body: BlocBuilder<SchedulesCubit, SchedulesState>(
         builder: (context, state) {
+          final data = context.read<SchedulesCubit>().schedules;
+
           switch (state) {
             case SchedulesFetch():
               context.read<SchedulesCubit>().fetchData();
@@ -59,13 +61,13 @@ class SchedulesView extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
 
-            case SchedulesSuccess():
-              return SizedBox(
-                child: DaySchedulesList(items: state.items),
+            case SchedulesEmpty():
+              return const Center(
+                child: Text('Empty :('),
               );
           }
 
-          return const SizedBox();
+          return DaySchedulesList(items: data);
         },
       ),
     );
