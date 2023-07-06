@@ -59,9 +59,9 @@ class DaySchedulesItem extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              constraints: const BoxConstraints(minHeight: 32),
+              constraints: const BoxConstraints(minHeight: 48),
               decoration: BoxDecoration(color: Theme.of(context).primaryColor),
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

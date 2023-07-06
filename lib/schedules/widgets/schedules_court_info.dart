@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_court_scheduling/l10n/l10n.dart';
 
 class SchedulesCourtInfo extends StatelessWidget {
   const SchedulesCourtInfo({
@@ -14,6 +15,11 @@ class SchedulesCourtInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final color = maxDaily - names.length == 0
+        ? const Color(0xFF993300)
+        : const Color(0xFF339966);
+
     return Container(
       padding: const EdgeInsets.only(left: 24),
       decoration: const BoxDecoration(border: Border(top: BorderSide())),
@@ -34,14 +40,14 @@ class SchedulesCourtInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               textBaseline: TextBaseline.alphabetic,
               children: [
+                Text(l10n.schedulesCourtInfo_freeLabel),
+                const Spacer(),
                 Text(
                   '${maxDaily - names.length}/',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: maxDaily - names.length == 0
-                        ? Colors.red
-                        : Colors.green,
+                    color: color,
                   ),
                 ),
                 Text(
@@ -49,11 +55,10 @@ class SchedulesCourtInfo extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: maxDaily - names.length == 0
-                        ? Colors.red
-                        : Colors.green,
+                    color: color,
                   ),
                 ),
+                const SizedBox(width: 16),
               ],
             )
           ],

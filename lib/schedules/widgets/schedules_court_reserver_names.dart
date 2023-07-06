@@ -60,7 +60,10 @@ class SchedulesCourtReserverNames extends StatelessWidget {
                               date: date,
                             ),
                           ),
-                          icon: const Icon(Icons.remove_circle),
+                          icon: const Icon(
+                            Icons.remove_circle,
+                            color: Color(0xFF993300),
+                          ),
                         ),
                       )
                     ],

@@ -12,8 +12,8 @@ class App extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFFC6ED2C)),
-        iconTheme: const IconThemeData(color: Color(0xFF006D42)),
+        appBarTheme: const AppBarTheme(color: Color(0xFF339966)),
+        iconTheme: const IconThemeData(color: Color(0xFF339966)),
         primaryColor: const Color(0xFF006D42),
         inputDecorationTheme: const InputDecorationTheme(
           labelStyle: TextStyle(
@@ -31,6 +31,7 @@ class App extends StatelessWidget {
           seedColor: const Color(0xFF339966),
         ).copyWith(
           error: const Color(0xffc6ed2c),
+          background: const Color(0xFF339966),
         ),
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
