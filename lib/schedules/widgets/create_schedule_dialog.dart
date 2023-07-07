@@ -47,24 +47,17 @@ class CreateScheduleDialog extends StatelessWidget {
                         Row(
                           children: [
                             const Expanded(child: DatePicker()),
-                            BlocProvider(
-                              create: (context) => WeatherForecastCubit(
-                                repository: WeatherRepository(
-                                  dataProvider: WeatherDataProvider(),
-                                ),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: BlocBuilder<CreateScheduleCubit,
-                                    CreateScheduleState>(
-                                  builder: (context, state) {
-                                    return WeatherForecast(
-                                      day: state.data.weatherInfo
-                                          ?.precipitationProbabilityDay,
-                                    );
-                                  },
-                                ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: BlocBuilder<CreateScheduleCubit,
+                                  CreateScheduleState>(
+                                builder: (context, state) {
+                                  return WeatherForecast(
+                                    day: state.data.weatherInfo
+                                        ?.precipitationProbabilityDay,
+                                  );
+                                },
                               ),
                             ),
                           ],
