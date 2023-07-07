@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
 
@@ -17,7 +18,7 @@ class DaySchedulesItem extends StatelessWidget {
   List<Widget> _buildContent() {
     final r = <Widget>[];
     for (final courtName in courtSchedulingMap.keys) {
-      final names = courtSchedulingMap[courtName] ?? [];
+      final names = courtSchedulingMap[courtName] as List<String>? ?? [];
       final maxDaily = SchedulesConst.maxDailySchedulesByCourt;
       r.add(
         Container(
@@ -28,7 +29,7 @@ class DaySchedulesItem extends StatelessWidget {
             children: [
               Expanded(
                 child: SchedulesCourtInfo(
-                  courtName: courtName,
+                  courtName: courtName as String,
                   maxDaily: maxDaily,
                   names: names,
                 ),
@@ -71,7 +72,7 @@ class DaySchedulesItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    DateFormat.yMEd().format(dateTime),
+                    DateFormat.yMEd(context.l10n.localeName).format(dateTime),
                     style: TextStyle(
                       color: Theme.of(context).cardColor,
                       fontSize: 16,
