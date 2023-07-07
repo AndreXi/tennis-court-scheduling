@@ -14,7 +14,7 @@ class SchedulesRepository {
     final data = await dataProvider.readData(info.date) ?? {};
     if (data.isEmpty || !data.containsKey(info.courtName)) return false;
 
-    final names = data[info.courtName] ?? []
+    final names = data[info.courtName] as List<String>? ?? []
       ..remove(info.userName);
 
     /// If the list is empty remove the courtData completely
@@ -44,7 +44,7 @@ class SchedulesRepository {
 
     for (final courtName in courtNames) {
       if (dayData.keys.contains(courtName)) {
-        r.add(dayData[courtName]!.length < stock);
+        r.add(dayData[courtName]!.length < stock as bool);
       } else {
         r.add(true);
       }
@@ -55,7 +55,7 @@ class SchedulesRepository {
 
   Future<void> createSchedule(ReservationInfo info) async {
     final data = await dataProvider.readData(info.date) ?? {};
-    final names = data[info.courtName] ?? [];
+    final names = data[info.courtName] as List<String>? ?? [];
     if (names.isEmpty) {
       data[info.courtName] = [info.userName];
     } else {

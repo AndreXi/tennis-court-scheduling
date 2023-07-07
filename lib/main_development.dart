@@ -1,11 +1,15 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tennis_court_scheduling/app/app.dart';
 import 'package:tennis_court_scheduling/bootstrap.dart';
+import 'package:tennis_court_scheduling/schedules/data/const/schedules_const.dart';
 
 void main() {
   bootstrap(() async {
     // final box = await Hive.openBox<SchedulesBoxType>(
     //   SchedulesConst.boxName,
     // );
+
+    // box.clear();
 
     // await box.putAll({
     //   '2023-09-23': {
