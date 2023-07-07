@@ -75,7 +75,7 @@ class CreateScheduleDialog extends StatelessWidget {
                     ),
                   ),
                   // Spacer(),
-                  DialogButtons(
+                  CreateScheduleDialogButtons(
                     formKey: formKey,
                   ),
                 ],
