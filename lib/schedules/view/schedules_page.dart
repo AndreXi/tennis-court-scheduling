@@ -72,8 +72,21 @@ class SchedulesView extends StatelessWidget {
               );
 
             case SchedulesEmpty():
-              return const Center(
-                child: Text('Empty :('),
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'There are no schedules right now',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () => openCreateScheduleDialog(context),
+                      icon: const Icon(Icons.add),
+                      label: Text(l10n.schedulesPage_createButtonLabel),
+                    ),
+                  ],
+                ),
               );
 
             default:
