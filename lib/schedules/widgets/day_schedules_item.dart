@@ -79,7 +79,7 @@ class DaySchedulesItem extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 96,
                     height: 32,
                     child: BlocProvider(
                       create: (_) => WeatherForecastCubit(
@@ -87,7 +87,21 @@ class DaySchedulesItem extends StatelessWidget {
                           dataProvider: WeatherDataProvider(),
                         ),
                       ),
-                      child: WeatherForecast(date: dateTime),
+                      child: Builder(
+                        builder: (context) {
+                          return BlocBuilder<SchedulesCubit, SchedulesState>(
+                            builder: (context, state) {
+                              if (state case SchedulesSuccess()) {
+                                context
+                                    .read<WeatherForecastCubit>()
+                                    .fetchData(dateTime);
+                                return WeatherForecast(date: dateTime);
+                              }
+                              return SizedBox();
+                            },
+                          );
+                        },
+                      ),
                     ),
                   )
                 ],

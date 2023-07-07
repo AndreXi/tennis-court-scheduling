@@ -19,25 +19,37 @@ class WeatherForecast extends StatelessWidget {
             return const CircularProgressIndicator();
 
           case WeatherForecastSuccess():
-            return Container(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.thunderstorm,
-                    color: Colors.white,
-                  ),
-                  WeatherRainProbability(
-                    day: state.dayRainProbability,
-                    night: state.nightRainProbability,
-                  )
-                ],
-              ),
+            return Row(
+              children: [
+                const Icon(
+                  Icons.thunderstorm,
+                  color: Color(0xfffefff3),
+                ),
+                const SizedBox(width: 8),
+                WeatherRainProbability(
+                  day: state.dayRainProbability,
+                  night: state.nightRainProbability,
+                )
+              ],
             );
 
+          case WeatherForecastUnknown():
+            return const Row(
+              children: [
+                Icon(
+                  Icons.thunderstorm,
+                  color: Color(0x99fefff3),
+                ),
+                SizedBox(width: 8),
+                WeatherRainProbabilityUnknown()
+              ],
+            );
+            ;
+
           default:
-            return SizedBox();
+            return const SizedBox();
         }
-        return SizedBox();
+        return const SizedBox();
       },
     );
   }
@@ -57,8 +69,34 @@ class WeatherRainProbability extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('$day%'),
-        // Text('$night%'),
+        Text(
+          '$day%',
+          style: const TextStyle(
+            color: Color(0xfffefff3),
+            fontSize: 24,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class WeatherRainProbabilityUnknown extends StatelessWidget {
+  const WeatherRainProbabilityUnknown({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      children: [
+        Text(
+          '--%',
+          style: TextStyle(
+            color: Color(0x99fefff3),
+            fontSize: 24,
+          ),
+        ),
       ],
     );
   }
