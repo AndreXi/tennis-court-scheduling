@@ -27,6 +27,7 @@ class SchedulesView extends StatelessWidget {
   void openCreateScheduleDialog(BuildContext context) {
     showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return const CreateScheduleDialog();
       },

@@ -17,6 +17,7 @@ class SchedulesCourtReserverNames extends StatelessWidget {
   void onPressedDelete(BuildContext context, ReservationInfo info) {
     showDialog<bool>(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return NameConfirmDeleteDialog(info: info);
       },
