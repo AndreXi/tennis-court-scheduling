@@ -9,42 +9,36 @@ class WeatherForecast extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => WeatherForecastCubit(
-        repository: WeatherRepository(dataProvider: WeatherDataProvider()),
-      ),
-      child: BlocBuilder<WeatherForecastCubit, WeatherForecastState>(
-        builder: (context, state) {
-          switch (state) {
-            case WeatherForecastFetch():
-              context.read<WeatherForecastCubit>().fetchData(date);
+    return BlocBuilder<WeatherForecastCubit, WeatherForecastState>(
+      builder: (context, state) {
+        switch (state) {
+          case WeatherForecastFetch():
+            context.read<WeatherForecastCubit>().fetchData(date);
 
-            case WeatherForecastFetching():
-              return const CircularProgressIndicator();
+          case WeatherForecastFetching():
+            return const CircularProgressIndicator();
 
-            case WeatherForecastSuccess():
-              context.read<WeatherForecastCubit>().fetchData(date);
-              return Container(
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.thunderstorm,
-                      color: Colors.white,
-                    ),
-                    WeatherRainProbability(
-                      day: state.dayRainProbability,
-                      night: state.nightRainProbability,
-                    )
-                  ],
-                ),
-              );
+          case WeatherForecastSuccess():
+            return Container(
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.thunderstorm,
+                    color: Colors.white,
+                  ),
+                  WeatherRainProbability(
+                    day: state.dayRainProbability,
+                    night: state.nightRainProbability,
+                  )
+                ],
+              ),
+            );
 
-            default:
-              return SizedBox();
-          }
-          return SizedBox();
-        },
-      ),
+          default:
+            return SizedBox();
+        }
+        return SizedBox();
+      },
     );
   }
 }
