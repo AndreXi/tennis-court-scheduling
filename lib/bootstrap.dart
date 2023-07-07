@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -28,10 +29,18 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   };
 
   Bloc.observer = const AppBlocObserver();
+  WidgetsFlutterBinding.ensureInitialized();
 
   // Init Hive and register adapters
   await Hive.initFlutter();
+  Hive.registerAdapter(WeatherModelAdapter());
   await Hive.deleteBoxFromDisk(SchedulesConst.boxName);
+
+  // Fetch initial data
+  try {
+    await WeatherRepository(dataProvider: WeatherDataProvider())
+        .getData(DateTime.now());
+  } catch (_) {}
 
   runApp(await builder());
 }
