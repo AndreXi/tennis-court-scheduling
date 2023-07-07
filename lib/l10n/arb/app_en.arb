@@ -1,7 +1,9 @@
 {
   "@@locale": "en",
   "courtField_available": "Available",
+  "courtField_error": "You must select a court to schedule",
   "courtField_full": "Full",
+  "courtField_label": "Courts",
   "createSchedule_cancel": "Cancel",
   "createSchedule_confirm": "Confirm",
   "createSchedule_title": "Create Schedule",
@@ -19,6 +21,7 @@
     }
   },
   "nameConfirmDeleteDialog_title": "Delete Reservation",
+  "schedules_emptyMessage": "There are no schedules right now",
   "schedules_title": "Schedules",
   "schedulesCourtInfo_freeLabel": "Free: ",
   "schedulesPage_createButtonLabel": "Create schedule"
