@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class CreateScheduleDialog extends StatelessWidget {
   const CreateScheduleDialog({super.key});
@@ -17,8 +18,10 @@ class CreateScheduleDialog extends StatelessWidget {
         width: 400,
         child: BlocProvider<CreateScheduleCubit>(
           create: (context) => CreateScheduleCubit(
-            repository:
+            schedulesRepository:
                 SchedulesRepository(dataProvider: SchedulesDataProvider()),
+            weatherRepository:
+                WeatherRepository(dataProvider: WeatherDataProvider()),
           ),
           child: Form(
             key: formKey,
@@ -41,14 +44,31 @@ class CreateScheduleDialog extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const DatePicker(),
+                        Row(
+                          children: [
+                            const Expanded(child: DatePicker()),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: BlocBuilder<CreateScheduleCubit,
+                                  CreateScheduleState>(
+                                builder: (context, state) {
+                                  return WeatherForecast(
+                                    day: state.data.weatherInfo
+                                        ?.precipitationProbabilityDay,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                         const NameField(),
                         const CourtField(),
                       ],
                     ),
                   ),
                   // Spacer(),
-                  DialogButtons(
+                  CreateScheduleDialogButtons(
                     formKey: formKey,
                   ),
                 ],

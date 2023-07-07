@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class DaySchedulesItem extends StatelessWidget {
   const DaySchedulesItem({
@@ -76,10 +78,17 @@ class DaySchedulesItem extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    width: 100,
+                  SizedBox(
+                    width: 96,
                     height: 32,
-                    child: Placeholder(),
+                    child: BlocBuilder<SchedulesCubit, SchedulesState>(
+                      builder: (context, state) {
+                        return WeatherForecast(
+                          day: state.data.weatherForecasts[date]
+                              ?.precipitationProbabilityDay,
+                        );
+                      },
+                    ),
                   )
                 ],
               ),

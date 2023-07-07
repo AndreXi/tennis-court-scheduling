@@ -1,11 +1,15 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 part 'create_schedule_state.dart';
 
 class CreateScheduleCubit extends Cubit<CreateScheduleState> {
-  CreateScheduleCubit({required this.repository})
-      : super(
+  CreateScheduleCubit({
+    required this.schedulesRepository,
+    required this.weatherRepository,
+  }) : super(
           CreateScheduleFetch(
             data: SchedulesCreateScheduleData(
               userName: '',
@@ -20,17 +24,21 @@ class CreateScheduleCubit extends Cubit<CreateScheduleState> {
     changeDate(state.data.date);
   }
 
-  final SchedulesRepository repository;
+  final SchedulesRepository schedulesRepository;
+  final WeatherRepository weatherRepository;
 
   Future<void> changeDate(DateTime newDate) async {
     emit(CreateScheduleFetching(data: state.data.copyWith(date: newDate)));
 
     /// Update the [availability]
-    final newAvailability = await repository.checkAvailability(
+    final newAvailability = await schedulesRepository.checkAvailability(
       SchedulesConst.courtNames,
       newDate,
       SchedulesConst.maxDailySchedulesByCourt,
     );
+
+    /// Update the [weatherInfo]
+    final weatherData = await weatherRepository.getData(newDate);
 
     /// Check if the selected [courtName] is available
     var newCourtName = state.data.courtName;
@@ -40,14 +48,15 @@ class CreateScheduleCubit extends Cubit<CreateScheduleState> {
       newCourtName = ''; // Reset the selection
     }
 
-    emit(
-      CreateScheduleSuccess(
-        data: state.data.copyWith(
-          availability: newAvailability,
-          courtName: newCourtName,
-        ),
-      ),
+    final newStateData = SchedulesCreateScheduleData(
+      availability: newAvailability,
+      courtName: newCourtName,
+      weatherInfo: weatherData,
+      date: state.data.date,
+      userName: state.data.userName,
     );
+
+    emit(CreateScheduleSuccess(data: newStateData));
   }
 
   void changeName(String newName) {
@@ -63,7 +72,7 @@ class CreateScheduleCubit extends Cubit<CreateScheduleState> {
   Future<void> createSchedule(ReservationInfo info) async {
     emit(CreateScheduleCreationLoading(data: state.data.copyWith()));
     try {
-      await repository.createSchedule(info);
+      await schedulesRepository.createSchedule(info);
       emit(CreateScheduleCreationSuccess(data: state.data.copyWith()));
     } catch (_) {
       emit(

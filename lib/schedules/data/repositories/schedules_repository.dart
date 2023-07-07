@@ -63,4 +63,22 @@ class SchedulesRepository {
     }
     await dataProvider.writeData(info.date, data);
   }
+
+  Future<void> removePastSchedules() async {
+    final dateTimeNow = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(dateTimeNow);
+
+    /// Get all the keys in order and add the current
+    final keys = (await dataProvider.readAllData()).keys.toList()
+      ..add(formattedDate)
+      ..sort(
+        (a, b) => a.compareTo(b),
+      );
+
+    /// Cut the keys list
+    final cutIndex = keys.indexOf(formattedDate);
+    final keysToDelete = keys.sublist(0, cutIndex);
+
+    await dataProvider.deleteKeys(keysToDelete);
+  }
 }

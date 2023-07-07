@@ -3,13 +3,21 @@ import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class SchedulesDataProvider {
   Future<Map<String, SchedulesBoxType>> readAllData() async {
-    final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
-    return box.toMap().cast();
+    try {
+      final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
+      return box.toMap().cast();
+    } catch (_) {
+      return {};
+    }
   }
 
   Future<SchedulesBoxType?> readData(String key) async {
-    final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
-    return box.get(key);
+    try {
+      final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
+      return box.get(key);
+    } catch (_) {
+      return {};
+    }
   }
 
   Future<void> writeData(String key, SchedulesBoxType data) async {
@@ -20,5 +28,10 @@ class SchedulesDataProvider {
   Future<void> deleteData(String key) async {
     final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
     await box.delete(key);
+  }
+
+  Future<void> deleteKeys(List<String> keys) async {
+    final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
+    await box.deleteAll(keys);
   }
 }

@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
-class DialogButtons extends StatelessWidget {
-  const DialogButtons({required this.formKey, super.key});
+class CreateScheduleDialogButtons extends StatelessWidget {
+  const CreateScheduleDialogButtons({required this.formKey, super.key});
 
   final GlobalKey<FormState> formKey;
 
