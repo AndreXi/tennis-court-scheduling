@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 @RoutePage()
 class SchedulesPage extends StatelessWidget {
@@ -12,7 +13,10 @@ class SchedulesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SchedulesCubit(
-        repository: SchedulesRepository(dataProvider: SchedulesDataProvider()),
+        schedulesRepository:
+            SchedulesRepository(dataProvider: SchedulesDataProvider()),
+        weatherRepository:
+            WeatherRepository(dataProvider: WeatherDataProvider()),
       ),
       child: const SchedulesView(),
     );
@@ -58,8 +62,6 @@ class SchedulesView extends StatelessWidget {
       ),
       body: BlocBuilder<SchedulesCubit, SchedulesState>(
         builder: (context, state) {
-          final data = context.read<SchedulesCubit>().schedules;
-
           switch (state) {
             case SchedulesFetch():
               context.read<SchedulesCubit>().fetchData();
@@ -73,9 +75,10 @@ class SchedulesView extends StatelessWidget {
               return const Center(
                 child: Text('Empty :('),
               );
-          }
 
-          return DaySchedulesList(items: data);
+            default:
+          }
+          return DaySchedulesList(items: state.data.schedules);
         },
       ),
     );

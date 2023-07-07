@@ -79,31 +79,16 @@ class DaySchedulesItem extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 96,
-                    height: 32,
-                    child: BlocProvider(
-                      create: (_) => WeatherForecastCubit(
-                        repository: WeatherRepository(
-                          dataProvider: WeatherDataProvider(),
-                        ),
-                      ),
-                      child: Builder(
-                        builder: (context) {
-                          return BlocBuilder<SchedulesCubit, SchedulesState>(
-                            builder: (context, state) {
-                              if (state case SchedulesSuccess()) {
-                                context
-                                    .read<WeatherForecastCubit>()
-                                    .fetchData(dateTime);
-                                return WeatherForecast(date: dateTime);
-                              }
-                              return SizedBox();
-                            },
+                      width: 96,
+                      height: 32,
+                      child: BlocBuilder<SchedulesCubit, SchedulesState>(
+                        builder: (context, state) {
+                          return WeatherForecast2(
+                            day: state.data.weatherForecasts[date]
+                                ?.precipitationProbabilityDay,
                           );
                         },
-                      ),
-                    ),
-                  )
+                      ))
                 ],
               ),
             ),

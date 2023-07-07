@@ -18,8 +18,10 @@ class CreateScheduleDialog extends StatelessWidget {
         width: 400,
         child: BlocProvider<CreateScheduleCubit>(
           create: (context) => CreateScheduleCubit(
-            repository:
+            schedulesRepository:
                 SchedulesRepository(dataProvider: SchedulesDataProvider()),
+            weatherRepository:
+                WeatherRepository(dataProvider: WeatherDataProvider()),
           ),
           child: Form(
             key: formKey,
@@ -54,14 +56,12 @@ class CreateScheduleDialog extends StatelessWidget {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 16),
-                                child: BlocConsumer<CreateScheduleCubit,
+                                child: BlocBuilder<CreateScheduleCubit,
                                     CreateScheduleState>(
-                                  listener: (context, state) => context
-                                      .read<WeatherForecastCubit>()
-                                      .fetchData(state.data.date),
                                   builder: (context, state) {
-                                    return WeatherForecast(
-                                      date: state.data.date,
+                                    return WeatherForecast2(
+                                      day: state.data.weatherInfo
+                                          ?.precipitationProbabilityDay,
                                     );
                                   },
                                 ),
