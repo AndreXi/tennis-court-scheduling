@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tennis_court_scheduling/env/env.dart';
-
-typedef TempType = dynamic;
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class WeatherDataProvider {
   final _dio = Dio();
@@ -19,18 +18,18 @@ class WeatherDataProvider {
     return response.data;
   }
 
-  Future<TempType> readBox(String key) async {
-    final box = await Hive.openBox<TempType>('weather');
+  Future<List<WeatherModel>?> readBox(String key) async {
+    final box = await Hive.openBox<List<WeatherModel>>('weather');
     return box.get(key);
   }
 
-  Future<void> writeBox(String key, TempType data) async {
-    final box = await Hive.openBox<TempType>('weather');
+  Future<void> writeBox(String key, List<WeatherModel> data) async {
+    final box = await Hive.openBox<List<WeatherModel>>('weather');
     return box.put(key, data);
   }
 
-  Future<int> clearBox(String key, TempType data) async {
-    final box = await Hive.openBox<TempType>('weather');
+  Future<int> clearBox(String key, List<WeatherModel> data) async {
+    final box = await Hive.openBox<List<WeatherModel>>('weather');
     return box.clear();
   }
 }

@@ -1,9 +1,17 @@
-import 'package:tennis_court_scheduling/weather/data/data_providers/weather_data_provider.dart';
+import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class WeatherRepository {
   WeatherRepository({required this.dataProvider});
 
   final WeatherDataProvider dataProvider;
 
-  dynamic getData() {}
+  Future<List<WeatherModel>> getData(String date) async {
+    final data = await dataProvider.readBox(date);
+
+    if (data == null) {
+      print('OK');
+    }
+
+    return [];
+  }
 }
