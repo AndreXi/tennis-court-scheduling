@@ -34,13 +34,18 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Init Hive and register adapters
   await Hive.initFlutter();
   Hive.registerAdapter(WeatherModelAdapter());
-  await Hive.deleteBoxFromDisk(SchedulesConst.boxName);
+  // await Hive.deleteBoxFromDisk(SchedulesConst.boxName);
 
   // Fetch initial data
   try {
     await WeatherRepository(dataProvider: WeatherDataProvider())
         .getData(DateTime.now());
   } catch (_) {}
+
+  // await SchedulesRepository(dataProvider: SchedulesDataProvider())
+  //     .removePastSchedules();
+
+  // await SchedulesDataProvider().aaaa();
 
   runApp(await builder());
 }

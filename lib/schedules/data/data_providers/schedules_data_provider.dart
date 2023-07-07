@@ -21,4 +21,9 @@ class SchedulesDataProvider {
     final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
     await box.delete(key);
   }
+
+  Future<void> deleteKeys(List<String> keys) async {
+    final box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
+    await box.deleteAll(keys);
+  }
 }
