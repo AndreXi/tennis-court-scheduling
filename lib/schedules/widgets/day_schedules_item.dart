@@ -83,7 +83,7 @@ class DaySchedulesItem extends StatelessWidget {
                       height: 32,
                       child: BlocBuilder<SchedulesCubit, SchedulesState>(
                         builder: (context, state) {
-                          return WeatherForecast2(
+                          return WeatherForecast(
                             day: state.data.weatherForecasts[date]
                                 ?.precipitationProbabilityDay,
                           );

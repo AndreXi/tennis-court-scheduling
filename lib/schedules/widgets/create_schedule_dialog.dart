@@ -59,7 +59,7 @@ class CreateScheduleDialog extends StatelessWidget {
                                 child: BlocBuilder<CreateScheduleCubit,
                                     CreateScheduleState>(
                                   builder: (context, state) {
-                                    return WeatherForecast2(
+                                    return WeatherForecast(
                                       day: state.data.weatherInfo
                                           ?.precipitationProbabilityDay,
                                     );
