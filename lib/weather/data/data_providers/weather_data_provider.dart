@@ -28,7 +28,7 @@ class WeatherDataProvider {
     return box.put(key, data);
   }
 
-  Future<int> clearBox(String key, List<WeatherModel> data) async {
+  Future<int> clearBox() async {
     final box = await Hive.openBox<List<WeatherModel>>('weather');
     return box.clear();
   }

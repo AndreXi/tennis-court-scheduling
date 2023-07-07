@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
-import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class DatePicker extends StatelessWidget {
   const DatePicker({super.key});
@@ -41,7 +40,6 @@ class DatePicker extends StatelessWidget {
         focusedErrorBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Color(0xffc6ed2c)),
         ),
-        // suffix: WeatherForecast(date: selectedDate),
       ),
       controller: TextEditingController(
         text: DateFormat.yMd().format(selectedDate),

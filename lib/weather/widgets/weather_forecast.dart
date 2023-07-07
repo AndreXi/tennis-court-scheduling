@@ -23,6 +23,7 @@ class WeatherForecast extends StatelessWidget {
               return const CircularProgressIndicator();
 
             case WeatherForecastSuccess():
+              context.read<WeatherForecastCubit>().fetchData(date);
               return Container(
                 child: Row(
                   children: [
