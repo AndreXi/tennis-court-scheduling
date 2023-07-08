@@ -18,8 +18,8 @@ class DaySchedulesItem extends StatelessWidget {
 
   List<Widget> _buildContent() {
     final r = <Widget>[];
-    for (final courtName in courtSchedulingMap.keys) {
-      final names = courtSchedulingMap[courtName] as List<String>? ?? [];
+    for (final courtName in courtSchedulingMap.courts.keys) {
+      final names = courtSchedulingMap.courts[courtName] as List<String>? ?? [];
       final maxDaily = SchedulesConst.maxDailySchedulesByCourt;
       r.add(
         Container(

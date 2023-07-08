@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:tennis_court_scheduling/schedules/data/models/schedules_model.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
 
@@ -35,7 +36,9 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Init Hive and register adapters
   await Hive.initFlutter();
-  Hive.registerAdapter(WeatherModelAdapter());
+  Hive
+    ..registerAdapter(SchedulesModelAdapter())
+    ..registerAdapter(WeatherModelAdapter());
   // await Hive.deleteBoxFromDisk(SchedulesConst.boxName);
 
   // Provide global repositories

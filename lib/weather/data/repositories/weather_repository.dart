@@ -9,7 +9,6 @@ class WeatherRepository {
   final WeatherDataProvider dataProvider;
 
   Future<WeatherModel?> getData(DateTime date) async {
-    // await dataProvider.clearBox();
     final formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     var data = await dataProvider.readBox(formattedDate);
 
