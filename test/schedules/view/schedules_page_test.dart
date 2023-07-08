@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mockito/annotations.dart';
@@ -15,6 +16,7 @@ import 'schedules_page_test.mocks.dart';
 void main() {
   late MockSchedulesRepository schedulesRepository;
   late MockWeatherRepository weatherRepositoryMock;
+  late SchedulesCubit schedulesCubit;
 
   group('SchedulesPage', () {
     setUpAll(() async {
@@ -40,6 +42,13 @@ void main() {
           precipitationProbabilityDay: 23,
           precipitationProbabilityNight: 0,
         ),
+      );
+    });
+
+    setUp(() {
+      schedulesCubit = SchedulesCubit(
+        schedulesRepository: schedulesRepository,
+        weatherRepository: weatherRepositoryMock,
       );
     });
 
@@ -70,8 +79,93 @@ void main() {
 
       await tester.tap(find.byIcon(Icons.add));
       await tester.pumpAndSettle();
+      expect(find.byType(CreateScheduleDialog), findsOneWidget);
+
+      // Input the name
+      expect(find.byType(NameField), findsOneWidget);
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'Name'),
+        'Andres',
+      );
+      expect(find.text('Andres'), findsOneWidget);
+
+      // Select the court
+      expect(find.byType(CourtField), findsOneWidget);
+      await tester.tap(find.text(SchedulesConst.courtNames[0]));
+      await tester.pumpAndSettle();
+
+      // Send the form
+      await tester.tap(find.text('Confirm'));
+      await tester.pumpAndSettle();
+    });
+
+    testWidgets('shows empty list message', (tester) async {
+      await tester.pumpApp(
+        SizedBox(
+          width: 420,
+          height: 840,
+          child: BlocProvider(
+            create: (context) => schedulesCubit,
+            child: const SchedulesView(),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      schedulesCubit.emit(
+        const SchedulesEmpty(
+          data: SchedulesData(schedules: {}, weatherForecasts: {}),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Find the column
+      final columnFinder = find.byType(Column);
+      expect(columnFinder, findsOneWidget);
+
+      // Find the button
+      final buttonFinder = find.descendant(
+        of: columnFinder,
+        matching: find.byIcon(Icons.add),
+      );
+      expect(buttonFinder, findsOneWidget);
+
+      // Find the message
+      expect(find.text('There are no schedules right now'), findsOneWidget);
+
+      // Tap the button
+      await tester.tap(buttonFinder);
+      await tester.pumpAndSettle();
 
       expect(find.byType(CreateScheduleDialog), findsOneWidget);
+    });
+
+    testWidgets('shows a loading button when state is SchedulesFetching',
+        (tester) async {
+      await tester.pumpApp(
+        SizedBox(
+          width: 420,
+          height: 840,
+          child: Scaffold(
+            body: BlocProvider(
+              create: (context) => schedulesCubit,
+              child: const SchedulesView(),
+            ),
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+      schedulesCubit.emit(
+        const SchedulesFetching(
+          data: SchedulesData(schedules: {}, weatherForecasts: {}),
+        ),
+      );
+      await tester.pump(
+        const Duration(milliseconds: 1),
+      ); // No and Settle or will be infinite
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
   });
 }
