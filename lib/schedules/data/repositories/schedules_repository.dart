@@ -1,7 +1,6 @@
 // ignore_for_file: unnecessary_cast
 
 import 'package:intl/intl.dart';
-import 'package:tennis_court_scheduling/schedules/data/models/schedules_model.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class SchedulesRepository {
