@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tennis_court_scheduling/l10n/l10n.dart';
@@ -20,8 +21,9 @@ class CreateScheduleDialog extends StatelessWidget {
           create: (context) => CreateScheduleCubit(
             schedulesRepository:
                 SchedulesRepository(dataProvider: SchedulesDataProvider()),
-            weatherRepository:
-                WeatherRepository(dataProvider: WeatherDataProvider()),
+            weatherRepository: WeatherRepository(
+              dataProvider: WeatherDataProvider(dio: Dio()),
+            ),
           ),
           child: Form(
             key: formKey,
