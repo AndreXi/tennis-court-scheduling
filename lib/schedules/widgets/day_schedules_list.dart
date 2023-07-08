@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_court_scheduling/schedules/data/models/schedules_model.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class DaySchedulesList extends StatelessWidget {
@@ -10,7 +11,10 @@ class DaySchedulesList extends StatelessWidget {
     final r = <Widget>[];
     for (final date in items.keys) {
       r.add(
-        DaySchedulesItem(date: date, courtSchedulingMap: items[date] ?? {}),
+        DaySchedulesItem(
+          date: date,
+          courtSchedulingMap: items[date] ?? SchedulesModel(courts: {}),
+        ),
       );
     }
     return r;

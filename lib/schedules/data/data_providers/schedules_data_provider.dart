@@ -20,7 +20,7 @@ class SchedulesDataProvider {
       final box = await hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
       return box.get(key);
     } catch (_) {
-      return {};
+      return null;
     }
   }
 

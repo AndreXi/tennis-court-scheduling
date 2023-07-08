@@ -15,33 +15,42 @@ void main() {
   late SchedulesDataProvider mockProvider;
   late SchedulesDataProvider provider;
 
-  final testData = {
-    '2023-09-23': {
-      SchedulesConst.courtNames[1]: ['Andres Pereira'],
-    },
-    '2023-07-07': {
-      SchedulesConst.courtNames[2]: [
-        'Maria Garcia',
-        'Pedro Martinez',
-        'Jose Torres',
-      ],
-      SchedulesConst.courtNames[0]: [
-        'Daniela Pereira',
-        'Tony Gutierrez',
-      ]
-    },
-    '2023-07-09': {
-      SchedulesConst.courtNames[2]: ['Sonia Perez']
-    }
-  };
+  late Map<String, SchedulesModel> testData;
 
-  Hive.init(SchedulesConst.boxName);
+  Hive
+    ..init(SchedulesConst.boxName)
+    ..registerAdapter(SchedulesModelAdapter());
 
   setUp(() async {
     mockHive = MockHiveInterface();
     box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
     mockProvider = SchedulesDataProvider(hive: mockHive);
     provider = SchedulesDataProvider(hive: Hive);
+    testData = {
+      '2023-09-23': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[1]: ['Andres Pereira'],
+        },
+      ),
+      '2023-07-07': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[2]: [
+            'Maria Garcia',
+            'Pedro Martinez',
+            'Jose Torres',
+          ],
+          SchedulesConst.courtNames[0]: [
+            'Daniela Pereira',
+            'Tony Gutierrez',
+          ]
+        },
+      ),
+      '2023-07-09': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[2]: ['Sonia Perez']
+        },
+      ),
+    };
   });
 
   tearDown(() async {
@@ -84,23 +93,25 @@ void main() {
       expect(result, equals(testData[key]));
     });
 
-    test('readData error returns an empty Map', () async {
+    test('readData error returns null', () async {
       when(mockHive.openBox<SchedulesBoxType>(SchedulesConst.boxName))
           .thenThrow(Error.new);
 
       final result = await mockProvider.readData('2023-07-09');
 
-      expect(result?.isEmpty, equals(true));
+      expect(result == null, equals(true));
     });
 
     test('writeData write data in the box', () async {
       const key = '2023-07-09';
-      final value = {
-        SchedulesConst.courtNames[0]: [
-          'Daniela Pereira',
-          'Tony Gutierrez',
-        ]
-      };
+      final value = SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[0]: [
+            'Daniela Pereira',
+            'Tony Gutierrez',
+          ]
+        },
+      );
 
       await provider.writeData(key, value);
       final dataWritted = box.get(key);

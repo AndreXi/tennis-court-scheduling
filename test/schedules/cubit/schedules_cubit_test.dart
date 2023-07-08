@@ -4,6 +4,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:tennis_court_scheduling/schedules/data/models/schedules_model.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
 
@@ -17,24 +18,50 @@ void main() {
     late SchedulesCubit cubit;
 
     final schedulesTestData = {
-      '2023-09-23': {
-        SchedulesConst.courtNames[1]: ['Andres Pereira'],
-      },
-      '2023-07-07': {
-        SchedulesConst.courtNames[2]: [
-          'Maria Garcia',
-          'Pedro Martinez',
-          'Jose Torres',
-        ],
-        SchedulesConst.courtNames[0]: [
-          'Daniela Pereira',
-          'Tony Gutierrez',
-        ]
-      },
-      '2023-07-09': {
-        SchedulesConst.courtNames[2]: ['Sonia Perez']
-      }
+      '2023-09-23': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[1]: ['Andres Pereira'],
+        },
+      ),
+      '2023-07-07': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[2]: [
+            'Maria Garcia',
+            'Pedro Martinez',
+            'Jose Torres',
+          ],
+          SchedulesConst.courtNames[0]: [
+            'Daniela Pereira',
+            'Tony Gutierrez',
+          ]
+        },
+      ),
+      '2023-07-09': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[2]: ['Sonia Perez']
+        },
+      ),
     };
+
+    // final schedulesTestData = {
+    //   '2023-09-23': {
+    //     SchedulesConst.courtNames[1]: ['Andres Pereira'],
+    //   },
+    //   '2023-07-07': {
+    //     SchedulesConst.courtNames[2]: [
+    //       'Maria Garcia',
+    //       'Pedro Martinez',
+    //       'Jose Torres',
+    //     ],
+    //     SchedulesConst.courtNames[0]: [
+    //       'Daniela Pereira',
+    //       'Tony Gutierrez',
+    //     ]
+    //   },
+    //   '2023-07-09': {
+    //     SchedulesConst.courtNames[2]: ['Sonia Perez']
+    //   }
+    // };
 
     final cubitStateTestNoWeather = SchedulesData(
       schedules: schedulesTestData,

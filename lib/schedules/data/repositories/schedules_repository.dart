@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_cast
 
 import 'package:intl/intl.dart';
+import 'package:tennis_court_scheduling/schedules/data/models/schedules_model.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class SchedulesRepository {
@@ -13,19 +14,19 @@ class SchedulesRepository {
   }
 
   Future<bool> removeReservation(ReservationInfo info) async {
-    final data = await dataProvider.readData(info.date) ?? {};
-    if (data.isEmpty || !data.containsKey(info.courtName)) return false;
+    final data = await dataProvider.readData(info.date);
+    if (data == null || !data.courts.containsKey(info.courtName)) return false;
 
-    final names = data[info.courtName] as List<String>? ?? []
+    final names = data.courts[info.courtName] as List<String>? ?? []
       ..remove(info.userName);
 
     /// If the list is empty remove the courtData completely
     if (names.isEmpty) {
-      data.remove(info.courtName);
+      data.courts.remove(info.courtName);
     }
 
     /// If all courts were removed delete the [info.date] key completely
-    if (data.isEmpty) {
+    if (data.courts.keys.isEmpty) {
       await dataProvider.deleteData(info.date);
       return true;
     }
@@ -42,11 +43,11 @@ class SchedulesRepository {
   ) async {
     final r = <bool>[];
     final formattedDate = DateFormat('yyyy-MM-dd').format(date);
-    final dayData = await dataProvider.readData(formattedDate) ?? {};
+    final dayData = await dataProvider.readData(formattedDate);
 
     for (final courtName in courtNames) {
-      if (dayData.keys.contains(courtName)) {
-        r.add(dayData[courtName]!.length < stock as bool);
+      if (dayData != null && dayData.courts.keys.contains(courtName)) {
+        r.add(dayData.courts[courtName]!.length < stock as bool);
       } else {
         r.add(true);
       }
@@ -56,10 +57,11 @@ class SchedulesRepository {
   }
 
   Future<void> createSchedule(ReservationInfo info) async {
-    final data = await dataProvider.readData(info.date) ?? {};
-    final names = data[info.courtName] as List<String>? ?? [];
+    final data =
+        await dataProvider.readData(info.date) ?? SchedulesModel(courts: {});
+    final names = data.courts[info.courtName] as List<String>? ?? [];
     if (names.isEmpty) {
-      data[info.courtName] = [info.userName];
+      data.courts[info.courtName] = [info.userName];
     } else {
       names.add(info.userName);
     }
