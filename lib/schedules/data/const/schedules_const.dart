@@ -1,4 +1,4 @@
-typedef SchedulesBoxType = Map<dynamic, dynamic>;
+typedef SchedulesBoxType = Map<String, List<String>>;
 
 abstract final class SchedulesConst {
   static String boxName = 'schedules';
