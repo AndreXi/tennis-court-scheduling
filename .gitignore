@@ -131,6 +131,10 @@ __generated__/
 # Generated files
 *.gr.*
 *.g.*
+*.mocks.dart
+
+# Ignore Hive DB 
+*.hive
 
 # Ignore Folder
 _folder/

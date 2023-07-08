@@ -5,12 +5,14 @@ import 'package:tennis_court_scheduling/env/env.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
 
 class WeatherDataProvider {
-  final _dio = Dio();
+  WeatherDataProvider({required this.dio});
+
+  final Dio dio;
 
   Future<Map<String, dynamic>?> fetchForecastData() async {
     debugPrint('API Weather Request');
     try {
-      final response = await _dio.get<Map<String, dynamic>>(
+      final response = await dio.get<Map<String, dynamic>>(
         Env.apiUrl,
         queryParameters: {
           'apikey': Env.apiKeyWeather,

@@ -1,7 +1,8 @@
+// ignore_for_file: unnecessary_cast
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:tennis_court_scheduling/l10n/l10n.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
 
@@ -71,17 +72,19 @@ class DaySchedulesItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    DateFormat.yMEd(context.l10n.localeName).format(dateTime),
-                    style: TextStyle(
-                      color: Theme.of(context).cardColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Flexible(
+                    flex: 7,
+                    child: Text(
+                      DateFormat.yMEd().format(dateTime),
+                      style: TextStyle(
+                        color: Theme.of(context).cardColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    width: 96,
-                    height: 32,
+                  Flexible(
+                    flex: 3,
                     child: BlocBuilder<SchedulesCubit, SchedulesState>(
                       builder: (context, state) {
                         return WeatherForecast(

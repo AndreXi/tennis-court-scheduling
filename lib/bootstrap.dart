@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
@@ -36,11 +38,19 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   Hive.registerAdapter(WeatherModelAdapter());
   // await Hive.deleteBoxFromDisk(SchedulesConst.boxName);
 
+  // Provide global repositories
+  GetIt.I.registerSingleton<WeatherRepository>(
+    WeatherRepository(dataProvider: WeatherDataProvider(dio: Dio())),
+  );
+  GetIt.I.registerSingleton<SchedulesRepository>(
+    SchedulesRepository(dataProvider: SchedulesDataProvider(hive: Hive)),
+  );
+
   // Fetch initial data
   try {
-    await WeatherRepository(dataProvider: WeatherDataProvider())
+    await WeatherRepository(dataProvider: WeatherDataProvider(dio: Dio()))
         .getData(DateTime.now());
-    await SchedulesRepository(dataProvider: SchedulesDataProvider())
+    await SchedulesRepository(dataProvider: SchedulesDataProvider(hive: Hive))
         .removePastSchedules();
   } catch (_) {}
 

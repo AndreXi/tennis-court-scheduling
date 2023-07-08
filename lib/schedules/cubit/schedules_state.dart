@@ -1,6 +1,6 @@
 part of 'schedules_cubit.dart';
 
-class SchedulesData extends Equatable {
+class SchedulesData {
   const SchedulesData({
     required this.schedules,
     required this.weatherForecasts,
@@ -18,16 +18,10 @@ class SchedulesData extends Equatable {
       weatherForecasts: weatherForecasts ?? this.weatherForecasts,
     );
   }
-
-  @override
-  String toString() => '''
-SchedulesData(schedules: $schedules, weatherForecasts: $weatherForecasts)''';
-
-  @override
-  List<Object> get props => [schedules, weatherForecasts];
 }
 
 sealed class SchedulesState<T extends SchedulesData> {
+  // coverage:ignore-line
   const SchedulesState({required this.data});
   final SchedulesData data;
 }
@@ -51,13 +45,4 @@ final class SchedulesSuccess extends SchedulesState {
 final class SchedulesError extends SchedulesState {
   const SchedulesError(this.error, {required super.data});
   final String error;
-}
-
-final class SchedulesConfirmDelete extends SchedulesState {
-  const SchedulesConfirmDelete({
-    required this.info,
-    required super.data,
-  });
-
-  final ReservationInfo info;
 }
