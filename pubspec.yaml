@@ -14,8 +14,8 @@ scripts:
   update-coverage-badge: dart run covadge coverage/lcov.info .
   update-coverage:
     - flutter test --coverage --test-randomize-ordering-seed random
-    - lcov --remove coverage/lcov.info  '*.g.*' '*.gr.*'
-      'env.g.dart'  -o coverage/lcov.info
+    - lcov --remove coverage/lcov.info  '*.g.*' '*.gr.*' 'env.g.dart'  -o
+      coverage/lcov.info
     - derry update-coverage-badge
   open-coverage-report:
     - genhtml coverage/lcov.info -o coverage/
