@@ -13,29 +13,26 @@ import 'weather_data_provider_test.mocks.dart';
 @GenerateMocks([Dio])
 void main() {
   group('WeatherDataProvider', () {
-    late Dio mockDio;
-    late WeatherDataProvider weatherDataProvider;
-    late List<WeatherModel> weatherData;
+    final mockDio = MockDio();
+    final weatherDataProvider = WeatherDataProvider(dio: mockDio);
 
-    Hive.registerAdapter(WeatherModelAdapter());
+    final weatherData = <WeatherModel>[
+      WeatherModel(
+        precipitationProbabilityDay: 12,
+        precipitationProbabilityNight: 21,
+        date: DateTime(2023, 1, 2),
+      ),
+      WeatherModel(
+        precipitationProbabilityDay: 34,
+        precipitationProbabilityNight: 43,
+        date: DateTime(2023, 1, 3),
+      ),
+    ];
+    ;
 
-    setUp(() {
-      mockDio = MockDio();
-      weatherDataProvider = WeatherDataProvider(dio: mockDio);
-      weatherData = [
-        WeatherModel(
-          precipitationProbabilityDay: 12,
-          precipitationProbabilityNight: 21,
-          date: DateTime(2023, 1, 2),
-        ),
-        WeatherModel(
-          precipitationProbabilityDay: 34,
-          precipitationProbabilityNight: 43,
-          date: DateTime(2023, 1, 3),
-        ),
-      ];
-      Hive.init('test');
-    });
+    Hive
+      ..init('test')
+      ..registerAdapter(WeatherModelAdapter());
 
     test('fetchForecastData returns null if Dio throws an exception', () async {
       when(
@@ -156,6 +153,9 @@ void main() {
     });
 
     tearDown(() async {
+      try {
+        await Hive.box<List<dynamic>>('weather').clear();
+      } catch (_) {}
       await Hive.close();
     });
   });
