@@ -70,17 +70,19 @@ class DaySchedulesItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    DateFormat.yMEd().format(dateTime),
-                    style: TextStyle(
-                      color: Theme.of(context).cardColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  Flexible(
+                    flex: 7,
+                    child: Text(
+                      DateFormat.yMEd().format(dateTime),
+                      style: TextStyle(
+                        color: Theme.of(context).cardColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    width: 96,
-                    height: 32,
+                  Flexible(
+                    flex: 3,
                     child: BlocBuilder<SchedulesCubit, SchedulesState>(
                       builder: (context, state) {
                         return WeatherForecast(
