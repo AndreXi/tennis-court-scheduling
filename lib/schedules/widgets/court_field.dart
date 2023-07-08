@@ -8,10 +8,12 @@ class CourtField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return FormField<String>(
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'You must select a court to schedule';
+          return l10n.courtField_error;
         }
         return null;
       },
@@ -60,7 +62,7 @@ class CourtField extends StatelessWidget {
 
             return InputDecorator(
               decoration: InputDecoration(
-                labelText: 'Courts',
+                labelText: l10n.courtField_label,
                 errorText: field.errorText,
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: Color(0xfffefff3)),

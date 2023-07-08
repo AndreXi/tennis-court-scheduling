@@ -75,9 +75,9 @@ class SchedulesView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      'There are no schedules right now',
-                      style: TextStyle(color: Colors.white),
+                    Text(
+                      l10n.schedules_emptyMessage,
+                      style: const TextStyle(color: Colors.white),
                     ),
                     ElevatedButton.icon(
                       onPressed: () => openCreateScheduleDialog(context),

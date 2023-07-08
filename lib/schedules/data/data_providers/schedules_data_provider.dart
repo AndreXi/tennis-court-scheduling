@@ -11,7 +11,8 @@ class SchedulesDataProvider {
       final box = await hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
       return box.toMap().cast();
     } catch (_) {
-      return {};
+      final box = await Hive.openBox<dynamic>(SchedulesConst.boxName);
+      return box.toMap() as Map<String, SchedulesBoxType>;
     }
   }
 
@@ -20,7 +21,9 @@ class SchedulesDataProvider {
       final box = await hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
       return box.get(key);
     } catch (_) {
-      return {};
+      final box = await Hive.openBox<dynamic>(SchedulesConst.boxName);
+      return box.get(key) as SchedulesBoxType?;
+      // return {};
     }
   }
 

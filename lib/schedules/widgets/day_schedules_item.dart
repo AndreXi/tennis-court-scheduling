@@ -17,7 +17,7 @@ class DaySchedulesItem extends StatelessWidget {
   List<Widget> _buildContent() {
     final r = <Widget>[];
     for (final courtName in courtSchedulingMap.keys) {
-      final names = courtSchedulingMap[courtName] ?? [];
+      final names = courtSchedulingMap[courtName] as List<String>? ?? [];
       final maxDaily = SchedulesConst.maxDailySchedulesByCourt;
       r.add(
         Container(
@@ -28,7 +28,7 @@ class DaySchedulesItem extends StatelessWidget {
             children: [
               Expanded(
                 child: SchedulesCourtInfo(
-                  courtName: courtName,
+                  courtName: courtName as String,
                   maxDaily: maxDaily,
                   names: names,
                 ),
