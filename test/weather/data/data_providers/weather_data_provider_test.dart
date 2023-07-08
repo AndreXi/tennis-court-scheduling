@@ -28,7 +28,6 @@ void main() {
         date: DateTime(2023, 1, 3),
       ),
     ];
-    ;
 
     Hive
       ..init('test')

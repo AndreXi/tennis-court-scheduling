@@ -41,7 +41,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   try {
     await WeatherRepository(dataProvider: WeatherDataProvider(dio: Dio()))
         .getData(DateTime.now());
-    await SchedulesRepository(dataProvider: SchedulesDataProvider())
+    await SchedulesRepository(dataProvider: SchedulesDataProvider(hive: Hive))
         .removePastSchedules();
   } catch (_) {}
 
