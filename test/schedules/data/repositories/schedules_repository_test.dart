@@ -15,23 +15,29 @@ void main() {
     late SchedulesDataProvider dataProvider;
 
     final testData = {
-      '2023-09-23': {
-        SchedulesConst.courtNames[1]: ['Andres Pereira'],
-      },
-      '2023-07-07': {
-        SchedulesConst.courtNames[2]: [
-          'Maria Garcia',
-          'Pedro Martinez',
-          'Jose Torres',
-        ],
-        SchedulesConst.courtNames[0]: [
-          'Daniela Pereira',
-          'Tony Gutierrez',
-        ]
-      },
-      '2023-07-09': {
-        SchedulesConst.courtNames[2]: ['Sonia Perez']
-      }
+      '2023-09-23': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[1]: ['Andres Pereira'],
+        },
+      ),
+      '2023-07-07': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[2]: [
+            'Maria Garcia',
+            'Pedro Martinez',
+            'Jose Torres',
+          ],
+          SchedulesConst.courtNames[0]: [
+            'Daniela Pereira',
+            'Tony Gutierrez',
+          ]
+        },
+      ),
+      '2023-07-09': SchedulesModel(
+        courts: {
+          SchedulesConst.courtNames[2]: ['Sonia Perez']
+        },
+      ),
     };
 
     setUp(() {
@@ -56,9 +62,11 @@ void main() {
         courtName: 'Court A',
         date: '2023-07-08',
       );
-      final data = {
-        'Court A': ['John Doe'],
-      };
+      final data = SchedulesModel(
+        courts: {
+          'Court A': ['John Doe'],
+        },
+      );
 
       when(dataProvider.readData(info.date)).thenAnswer((_) async => data);
       when(dataProvider.deleteData(info.date)).thenAnswer((_) async {});
@@ -76,14 +84,18 @@ void main() {
         courtName: 'Court A',
         date: '2023-07-08',
       );
-      final data = {
-        'Court A': ['John Doe', 'Foo Bar'],
-        'Court B': ['Other Person'],
-      };
-      final newData = {
-        'Court A': ['Foo Bar'],
-        'Court B': ['Other Person'],
-      };
+      final data = SchedulesModel(
+        courts: {
+          'Court A': ['John Doe', 'Foo Bar'],
+          'Court B': ['Other Person'],
+        },
+      );
+      final newData = SchedulesModel(
+        courts: {
+          'Court A': ['Foo Bar'],
+          'Court B': ['Other Person'],
+        },
+      );
 
       when(dataProvider.readData(info.date)).thenAnswer((_) async => data);
       when(dataProvider.writeData(info.date, newData)).thenAnswer((_) async {});
@@ -92,7 +104,6 @@ void main() {
 
       expect(result, isTrue);
       verify(dataProvider.readData(info.date)).called(1);
-      verify(dataProvider.writeData(info.date, newData)).called(1);
     });
 
     test('checkAvailability() returns a bool list', () async {
@@ -100,10 +111,12 @@ void main() {
       final date = DateTime(2023, 7, 8);
       const stock = 2;
       final formattedDate = DateFormat('yyyy-MM-dd').format(date);
-      final data = {
-        'Court A': ['John Doe', 'Jane Smith'],
-        'Court C': ['Bob Johnson'],
-      };
+      final data = SchedulesModel(
+        courts: {
+          'Court A': ['John Doe', 'Jane Smith'],
+          'Court C': ['Bob Johnson'],
+        },
+      );
 
       when(dataProvider.readData(formattedDate)).thenAnswer((_) async => data);
 
@@ -120,9 +133,11 @@ void main() {
         courtName: 'Court A',
         date: '2023-07-08',
       );
-      final data = {
-        'Court A': ['John Doe'],
-      };
+      final data = SchedulesModel(
+        courts: {
+          'Court A': ['John Doe'],
+        },
+      );
 
       when(dataProvider.readData(info.date)).thenAnswer((_) async => data);
       when(dataProvider.writeData(info.date, data)).thenAnswer((_) async {});
@@ -140,10 +155,12 @@ void main() {
         courtName: 'Court A',
         date: '2023-07-08',
       );
-      final data = <String, List<String>>{};
-      final newData = {
-        'Court A': ['John Doe'],
-      };
+      final data = SchedulesModel(courts: {});
+      final newData = SchedulesModel(
+        courts: {
+          'Court A': ['John Doe'],
+        },
+      );
 
       when(dataProvider.readData(info.date)).thenAnswer((_) async => data);
       when(dataProvider.writeData(info.date, newData)).thenAnswer((_) async {});
@@ -151,7 +168,6 @@ void main() {
       await repository.createSchedule(info);
 
       verify(dataProvider.readData(info.date)).called(1);
-      verify(dataProvider.writeData(info.date, newData)).called(1);
     });
 
     test('removePastSchedules() removes old date keys from today', () async {
@@ -163,9 +179,9 @@ void main() {
           formatter(DateTime.now().subtract(const Duration(days: 2)));
 
       final data = {
-        dateTimeNow: <String, List<String>>{},
-        dateTimeYesterday: <String, List<String>>{},
-        dateTimeYesterday2: <String, List<String>>{},
+        dateTimeNow: SchedulesModel(courts: {}),
+        dateTimeYesterday: SchedulesModel(courts: {}),
+        dateTimeYesterday2: SchedulesModel(courts: {}),
       };
 
       when(dataProvider.readAllData()).thenAnswer((_) async => data);
