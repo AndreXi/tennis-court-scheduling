@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 import 'package:tennis_court_scheduling/weather/weather.dart';
 
@@ -71,16 +70,7 @@ class CreateScheduleCubit extends Cubit<CreateScheduleState> {
 
   Future<void> createSchedule(ReservationInfo info) async {
     emit(CreateScheduleCreationLoading(data: state.data.copyWith()));
-    try {
-      await schedulesRepository.createSchedule(info);
-      emit(CreateScheduleCreationSuccess(data: state.data.copyWith()));
-    } catch (_) {
-      emit(
-        CreateScheduleError(
-          'Creation failed, check the availability of the court',
-          data: state.data.copyWith(),
-        ),
-      );
-    }
+    await schedulesRepository.createSchedule(info);
+    emit(CreateScheduleCreationSuccess(data: state.data.copyWith()));
   }
 }
