@@ -8,7 +8,6 @@ import 'schedules_data_provider_test.mocks.dart';
 
 @GenerateMocks([HiveInterface, Box<SchedulesBoxType>])
 void main() {
-  late MockBox<SchedulesBoxType> mockBox;
   late Box<SchedulesBoxType> box;
 
   late MockHiveInterface mockHive;
@@ -40,7 +39,6 @@ void main() {
 
   setUp(() async {
     mockHive = MockHiveInterface();
-    mockBox = MockBox<SchedulesBoxType>();
     box = await Hive.openBox<SchedulesBoxType>(SchedulesConst.boxName);
     mockProvider = SchedulesDataProvider(hive: mockHive);
     provider = SchedulesDataProvider(hive: Hive);
