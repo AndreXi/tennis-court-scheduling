@@ -8,11 +8,14 @@ class DatePicker extends StatelessWidget {
   const DatePicker({super.key});
 
   Future<void> _selectDate(BuildContext context, DateTime date) async {
+    final l10n = context.l10n;
     final picked = await showDatePicker(
       context: context,
       initialDate: date,
       firstDate: DateTime.now(),
       lastDate: DateTime(2100),
+      confirmText: l10n.nameConfirmDeleteDialog_confirm,
+      cancelText: l10n.nameConfirmDeleteDialog_cancel,
     );
     if (picked != null && picked != date) {
       if (context.mounted) {
