@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_court_scheduling/schedules/data/models/schedules_model.dart';
 import 'package:tennis_court_scheduling/schedules/schedules.dart';
 
 class DaySchedulesList extends StatelessWidget {
